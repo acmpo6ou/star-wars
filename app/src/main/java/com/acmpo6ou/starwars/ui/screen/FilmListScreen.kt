@@ -22,7 +22,7 @@ import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.Film
 
 @Composable
-fun FilmsScreen(filmList: SnapshotStateList<Film>) {
+fun FilmListScreen(filmList: SnapshotStateList<Film>) {
     val films = remember { filmList }
     LazyColumn() {
         items(items = films, key = { film: Film -> film.episodeId }) {
