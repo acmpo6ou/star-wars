@@ -3,4 +3,6 @@
     <string name="release_date">Released: %s</string>
     <string name="directors">Directors: %s</string>
     <string name="producers">Producers: %s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

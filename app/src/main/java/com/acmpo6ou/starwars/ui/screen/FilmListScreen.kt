@@ -41,7 +41,9 @@ fun FilmItem(film: Film) {
             .fillMaxWidth(),
         elevation = 5.dp,
     ) {
-        Column {
+        Column(
+            modifier = Modifier.padding(8.dp),
+        ) {
             Text(
                 text = film.title,
                 fontWeight = FontWeight.Bold,
