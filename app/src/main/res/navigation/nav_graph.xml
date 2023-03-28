@@ -50,5 +50,12 @@
         <argument
             android:name="personIndex"
             app:argType="integer" />
+        <action
+            android:id="@+id/actionFilmsList"
+            app:destination="@id/filmListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 </navigation>

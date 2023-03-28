@@ -43,11 +43,11 @@ class FilmInfoFragment : Fragment() {
                     val film = remember {
                         viewModel.filmsList[args.filmIndex]
                     }
-                    FilmInfoScreen(film) {
+                    FilmInfoScreen(film, {
                         loadCharacters(it)
                         val action = FilmInfoFragmentDirections.actionPeopleList()
                         navController?.navigate(action)
-                    }
+                    }) {}
                 }
             }
         }

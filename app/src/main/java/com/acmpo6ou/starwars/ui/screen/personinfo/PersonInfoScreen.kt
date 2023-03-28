@@ -1,6 +1,8 @@
 package com.acmpo6ou.starwars.ui.screen.personinfo
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -15,7 +17,11 @@ import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.Person
 
 @Composable
-fun PersonInfoScreen(person: Person) {
+fun PersonInfoScreen(
+    person: Person,
+    viewFilms: (urls: List<String>) -> Unit,
+    viewStarships: (urls: List<String>) -> Unit,
+) {
     Column(
         modifier = Modifier.padding(8.dp)
             .verticalScroll(rememberScrollState()),
@@ -33,5 +39,24 @@ fun PersonInfoScreen(person: Person) {
         Text(stringResource(R.string.mass, person.mass))
         Text(stringResource(R.string.height, person.height))
         Text(stringResource(R.string.home_world, person.homeworld))
+
+        Text(
+            text = stringResource(R.string.view_films),
+            fontWeight = FontWeight.Bold,
+            fontSize = 22.sp,
+            modifier = Modifier
+                .clickable { viewFilms(person.films) }
+                .fillMaxWidth()
+                .padding(8.dp),
+        )
+        Text(
+            text = stringResource(R.string.view_starships),
+            fontWeight = FontWeight.Bold,
+            fontSize = 22.sp,
+            modifier = Modifier
+                .clickable { viewStarships(person.starships) }
+                .fillMaxWidth()
+                .padding(8.dp),
+        )
     }
 }

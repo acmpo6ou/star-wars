@@ -8,13 +8,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
+import com.acmpo6ou.starwars.MainActivity
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
-import com.acmpo6ou.starwars.ui.screen.filminfo.FilmInfoFragmentArgs
+import com.acmpo6ou.starwars.client.FilmsClient
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.awaitResponse
 
 class PersonInfoFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
@@ -37,8 +42,31 @@ class PersonInfoFragment : Fragment() {
                     val person = remember {
                         viewModel.peopleList[args.personIndex]
                     }
-                    PersonInfoScreen(person)
+                    PersonInfoScreen(person, {
+                        loadFilms(it)
+                        val action = PersonInfoFragmentDirections.actionFilmsList()
+                        navController?.navigate(action)
+                    }) {}
                 }
+            }
+        }
+    }
+
+    private fun loadFilms(urls: List<String>) {
+        viewModel.viewModelScope.launch(Dispatchers.Default) {
+            val service = (activity as? MainActivity)
+                ?.retrofit
+                ?.create(FilmsClient::class.java)
+            viewModel.filmsList.clear()
+            for (url in urls) {
+                service?.getFilm(url)
+                    ?.awaitResponse()
+                    ?.body()
+                    ?.let {
+                        viewModel.viewModelScope.launch(Dispatchers.Main) {
+                            viewModel.filmsList.add(it)
+                        }
+                    }
             }
         }
     }
