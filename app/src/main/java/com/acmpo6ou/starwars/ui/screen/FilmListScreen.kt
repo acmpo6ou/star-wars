@@ -46,6 +46,7 @@ fun FilmItem(film: Film) {
         ) {
             Text(
                 text = film.title,
+                // TODO: why doesn't it work?
                 fontWeight = FontWeight.Bold,
             )
             Text(stringResource(R.string.release_date, film.releaseDate))

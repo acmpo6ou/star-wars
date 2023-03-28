@@ -20,3 +20,6 @@ data class Film(
     val edited: String = "",
     val url: String = "",
 )
+
+@Serializable
+data class Films(val results: List<Film>)
