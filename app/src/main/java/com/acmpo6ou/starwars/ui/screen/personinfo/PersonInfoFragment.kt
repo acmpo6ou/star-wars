@@ -1,20 +1,24 @@
-package com.acmpo6ou.starwars.ui.screen.peoplelist
+package com.acmpo6ou.starwars.ui.screen.personinfo
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.navArgs
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
+import com.acmpo6ou.starwars.ui.screen.filminfo.FilmInfoFragmentArgs
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
 
-class PeopleListFragment : Fragment() {
+class PersonInfoFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
+    private val args: PersonInfoFragmentArgs by navArgs()
     private val navController: NavController?
         get() {
             val navHostFragment = activity?.supportFragmentManager
@@ -30,11 +34,10 @@ class PeopleListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    PeopleListScreen(viewModel.peopleList) {
-                        val index = viewModel.peopleList.indexOf(it)
-                        val action = PeopleListFragmentDirections.actionPersonInfo(index)
-                        navController?.navigate(action)
+                    val person = remember {
+                        viewModel.peopleList[args.personIndex]
                     }
+                    PersonInfoScreen(person)
                 }
             }
         }
