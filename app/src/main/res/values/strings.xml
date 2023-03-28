@@ -5,4 +5,8 @@
     <string name="producers">Producers: %s</string>
     <string name="view_characters">VIEW ALL CHARACTERS</string>
     <string name="view_starships">VIEW ALL STARSHIPS</string>
+    <string name="birth_date">Birth date: %s</string>
+    <string name="gender">Gender: %s</string>
+    <string name="mass">Mass: %s</string>
+    <string name="home_world">Home world: %s</string>
 </resources>
