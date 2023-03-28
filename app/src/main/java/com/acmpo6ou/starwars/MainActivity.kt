@@ -5,7 +5,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.viewModelScope
 import com.acmpo6ou.starwars.client.FilmsClient
-import com.acmpo6ou.starwars.model.Film
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

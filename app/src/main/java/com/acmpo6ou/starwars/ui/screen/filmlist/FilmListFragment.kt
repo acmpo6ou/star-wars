@@ -1,4 +1,4 @@
-package com.acmpo6ou.starwars.ui.screen
+package com.acmpo6ou.starwars.ui.screen.filmlist
 
 import android.os.Bundle
 import android.view.LayoutInflater

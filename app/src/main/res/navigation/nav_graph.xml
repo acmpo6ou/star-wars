@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/filmListFragment"
-        android:name="com.acmpo6ou.starwars.ui.screen.FilmListFragment"
+        android:name="com.acmpo6ou.starwars.ui.screen.filmlist.FilmListFragment"
         android:label="FilmListFragment" />
 </navigation>

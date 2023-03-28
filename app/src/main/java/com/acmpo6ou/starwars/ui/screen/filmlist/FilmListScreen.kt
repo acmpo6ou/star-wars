@@ -1,4 +1,4 @@
-package com.acmpo6ou.starwars.ui.screen
+package com.acmpo6ou.starwars.ui.screen.filmlist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,6 +24,7 @@ import com.acmpo6ou.starwars.model.Film
 @Composable
 fun FilmListScreen(filmList: SnapshotStateList<Film>) {
     val films = remember { filmList }
+    // TODO: show loading when there are no films
     LazyColumn() {
         items(items = films, key = { film: Film -> film.episodeId }) {
             FilmItem(it)
