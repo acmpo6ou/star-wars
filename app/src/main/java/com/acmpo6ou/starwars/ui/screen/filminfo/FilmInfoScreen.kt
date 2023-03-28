@@ -18,7 +18,7 @@ import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.Film
 
 @Composable
-fun FilmInfoScreen(film: Film) {
+fun FilmInfoScreen(film: Film, viewCharacters: (urls: List<String>) -> Unit) {
     Column(
         modifier = Modifier.padding(8.dp)
             .verticalScroll(rememberScrollState()),
@@ -41,7 +41,7 @@ fun FilmInfoScreen(film: Film) {
             fontWeight = FontWeight.Bold,
             fontSize = 22.sp,
             modifier = Modifier
-                .clickable {  }
+                .clickable { viewCharacters(film.characters) }
                 .fillMaxWidth()
                 .padding(8.dp),
         )
@@ -89,5 +89,5 @@ fun FilmInfoPreview() {
             freedom to the galaxy....
             """.trimIndent(),
         ),
-    )
+    ) {}
 }

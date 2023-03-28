@@ -54,7 +54,7 @@ fun PersonItem(person: Person, navigate: (person: Person) -> Unit) {
             )
             Text(stringResource(R.string.birth_date, person.birthYear))
             Text(stringResource(R.string.gender, person.gender))
-            Text(stringResource(R.string.home_world, person.homeworld))
+            Text(stringResource(R.string.skin_color, person.skinColor))
         }
     }
 }
