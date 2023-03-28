@@ -22,23 +22,26 @@ import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.Film
 
 @Composable
-fun FilmListScreen(filmList: SnapshotStateList<Film>) {
+fun FilmListScreen(
+    filmList: SnapshotStateList<Film>,
+    navigate: (film: Film) -> Unit,
+) {
     val films = remember { filmList }
     // TODO: show loading when there are no films
     LazyColumn() {
         items(items = films, key = { film: Film -> film.episodeId }) {
-            FilmItem(it)
+            FilmItem(it, navigate)
         }
     }
 }
 
 @Composable
-fun FilmItem(film: Film) {
+fun FilmItem(film: Film, navigate: (film: Film) -> Unit) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .wrapContentHeight(Alignment.Top)
-            .clickable {}
+            .clickable { navigate(film) }
             .fillMaxWidth(),
         elevation = 5.dp,
     ) {
@@ -67,5 +70,5 @@ fun FilmItemPreview() {
             director = "George Lucas",
             producer = "Gary Kurtz, Rick McCallum",
         ),
-    )
+    ) {}
 }

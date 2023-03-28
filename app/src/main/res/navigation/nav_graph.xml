@@ -7,5 +7,21 @@
     <fragment
         android:id="@+id/filmListFragment"
         android:name="com.acmpo6ou.starwars.ui.screen.filmlist.FilmListFragment"
-        android:label="FilmListFragment" />
+        android:label="FilmListFragment" >
+        <action
+            android:id="@+id/actionFilmInfo"
+            app:destination="@id/filmInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmInfoFragment"
+        android:name="com.acmpo6ou.starwars.ui.screen.filminfo.FilmInfoFragment"
+        android:label="FilmInfoFragment" >
+        <argument
+            android:name="filmIndex"
+            app:argType="integer" />
+    </fragment>
 </navigation>

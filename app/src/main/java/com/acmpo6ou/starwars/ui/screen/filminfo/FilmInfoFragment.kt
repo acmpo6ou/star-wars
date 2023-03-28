@@ -8,18 +8,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.navArgs
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
-import kotlin.properties.Delegates
 
 class FilmInfoFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
-    var index = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // TODO: get index
-    }
+    private val args: FilmInfoFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +24,9 @@ class FilmInfoFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    val film = remember { viewModel.filmsList[index] }
+                    val film = remember {
+                        viewModel.filmsList[args.filmIndex]
+                    }
                     FilmInfoScreen(film)
                 }
             }
