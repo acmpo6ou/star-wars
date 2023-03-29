@@ -22,22 +22,34 @@ class MainViewModel : ViewModel() {
     val favoritePeople = mutableStateListOf<String>()
     val favoriteStarships = mutableStateListOf<String>()
 
-    fun initialize(mainRepo: MainRepo) {
+    val favorites = mapOf(
+        FAVORITE_FILMS to favoriteFilms,
+        FAVORITE_PEOPLE to favoritePeople,
+        FAVORITE_STARSHIPS to favoriteStarships,
+    )
+
+    fun initialize(mainRepo: MainRepo, favoritesRepo: FavoritesRepo) {
         this.mainRepo = mainRepo
+        this.favoritesRepo = favoritesRepo
         loadFilms()
         loadFavorites()
     }
 
     private fun loadFavorites() {
-        val favorites = mapOf(
-            FAVORITE_FILMS to favoriteFilms,
-            FAVORITE_PEOPLE to favoritePeople,
-            FAVORITE_STARSHIPS to favoriteStarships,
-        )
         for ((key, list) in favorites) {
             list.clear()
             list.addAll(favoritesRepo.getFavorites(key))
         }
+    }
+
+    fun addFavorite(key: String, value: String) {
+        favorites[key]?.add(value)
+        favoritesRepo.saveFavorites(key, favorites[key] ?: listOf())
+    }
+
+    fun removeFavorite(key: String, value: String) {
+        favorites[key]?.remove(value)
+        favoritesRepo.saveFavorites(key, favorites[key] ?: listOf())
     }
 
     private fun loadFilms() {

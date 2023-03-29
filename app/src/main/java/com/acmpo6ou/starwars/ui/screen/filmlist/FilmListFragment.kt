@@ -31,11 +31,21 @@ class FilmListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    FilmListScreen(viewModel.filmsList) {
-                        val index = viewModel.filmsList.indexOf(it)
-                        val action = FilmListFragmentDirections.actionFilmInfo(index)
-                        navController?.navigate(action)
-                    }
+                    FilmListScreen(
+                        viewModel.filmsList,
+                        viewModel.favoriteFilms,
+                        {
+                            val index = viewModel.filmsList.indexOf(it)
+                            val action = FilmListFragmentDirections.actionFilmInfo(index)
+                            navController?.navigate(action)
+                        },
+                        { key: String, title: String ->
+                            viewModel.addFavorite(key, title)
+                        },
+                        { key: String, title: String ->
+                            viewModel.removeFavorite(key, title)
+                        },
+                    )
                 }
             }
         }

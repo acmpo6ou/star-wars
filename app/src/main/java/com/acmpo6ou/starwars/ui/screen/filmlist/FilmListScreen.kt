@@ -1,42 +1,54 @@
 package com.acmpo6ou.starwars.ui.screen.filmlist
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.acmpo6ou.starwars.R
+import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITE_FILMS
 import com.acmpo6ou.starwars.model.Film
 
 @Composable
 fun FilmListScreen(
     filmList: SnapshotStateList<Film>,
+    favorites: SnapshotStateList<String>,
     navigate: (film: Film) -> Unit,
+    addFavorite: (key: String, title: String) -> Unit,
+    removeFavorite: (key: String, title: String) -> Unit,
 ) {
     val films = remember { filmList }
     // TODO: show loading when there are no films
     LazyColumn() {
         items(items = films, key = { film: Film -> film.episodeId }) {
-            FilmItem(it, navigate)
+            FilmItem(it, favorites, navigate, addFavorite, removeFavorite)
         }
     }
 }
 
 @Composable
-fun FilmItem(film: Film, navigate: (film: Film) -> Unit) {
+fun FilmItem(
+    film: Film,
+    favorites: SnapshotStateList<String>,
+    navigate: (film: Film) -> Unit,
+    addFavorite: (key: String, title: String) -> Unit,
+    removeFavorite: (key: String, title: String) -> Unit,
+) {
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -48,11 +60,30 @@ fun FilmItem(film: Film, navigate: (film: Film) -> Unit) {
         Column(
             modifier = Modifier.padding(8.dp),
         ) {
-            Text(
-                text = film.title,
-                // TODO: why doesn't it work?
-                fontWeight = FontWeight.Bold,
-            )
+            Row {
+                Text(
+                    text = film.title,
+                    // TODO: why doesn't it work?
+                    fontWeight = FontWeight.Bold,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+
+                if (film.title in favorites) {
+                    IconButton(onClick = { removeFavorite(FAVORITE_FILMS, film.title) }) {
+                        Icon(
+                            painterResource(R.drawable.favorite),
+                            stringResource(R.string.remove_favorite, film.title),
+                        )
+                    }
+                } else {
+                    IconButton(onClick = { addFavorite(FAVORITE_FILMS, film.title) }) {
+                        Icon(
+                            painterResource(R.drawable.favorite_border),
+                            stringResource(R.string.add_favorite, film.title),
+                        )
+                    }
+                }
+            }
             Text(stringResource(R.string.release_date, film.releaseDate))
             Text(stringResource(R.string.directors, film.director))
             Text(stringResource(R.string.producers, film.producer))
@@ -60,6 +91,7 @@ fun FilmItem(film: Film, navigate: (film: Film) -> Unit) {
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview
 fun FilmItemPreview() {
@@ -70,5 +102,8 @@ fun FilmItemPreview() {
             director = "George Lucas",
             producer = "Gary Kurtz, Rick McCallum",
         ),
-    ) {}
+        mutableStateListOf(),
+        {},
+        { _, _ -> },
+    ) { _, _ -> }
 }

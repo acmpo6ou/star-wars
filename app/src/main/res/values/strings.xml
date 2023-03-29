@@ -27,4 +27,6 @@
     <string name="consumables">Consumables: %s</string>
     <string name="mglt">MGLT: %s</string>
     <string name="cost_in_cedits">Cost in Credits: %s</string>
+    <string name="add_favorite">Add %s to favorites</string>
+    <string name="remove_favorite">Remove %s from favorites</string>
 </resources>

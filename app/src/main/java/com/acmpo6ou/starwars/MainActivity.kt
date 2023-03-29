@@ -1,8 +1,10 @@
 package com.acmpo6ou.starwars
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.acmpo6ou.starwars.model.FavoritesRepo
 import com.acmpo6ou.starwars.model.MainRepo
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -25,8 +27,10 @@ class MainActivity : AppCompatActivity() {
                 }.asConverterFactory(contentType),
             )
             .build()
-        val repo = MainRepo(retrofit)
-        viewModel.initialize(repo)
+        val mainRepo = MainRepo(retrofit)
+        val prefs = getSharedPreferences("favorites", MODE_PRIVATE)
+        val favoritesRepo = FavoritesRepo(prefs)
+        viewModel.initialize(mainRepo, favoritesRepo)
         setContentView(R.layout.activity_main)
     }
 }
