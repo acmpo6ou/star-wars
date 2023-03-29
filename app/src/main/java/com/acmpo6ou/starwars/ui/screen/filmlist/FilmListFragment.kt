@@ -31,8 +31,8 @@ class FilmListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    FilmListScreen(viewModel.filmsList) { film: Film ->
-                        val index = viewModel.filmsList.indexOf(film)
+                    FilmListScreen(viewModel.filmsList) {
+                        val index = viewModel.filmsList.indexOf(it)
                         val action = FilmListFragmentDirections.actionFilmInfo(index)
                         navController?.navigate(action)
                     }

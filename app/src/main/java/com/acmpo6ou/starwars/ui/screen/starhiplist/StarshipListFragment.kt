@@ -9,15 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.navArgs
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
-import com.acmpo6ou.starwars.ui.screen.personinfo.PersonInfoFragmentArgs
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
 
 class StarshipListFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
-    private val args: PersonInfoFragmentArgs by navArgs()
     private val navController: NavController?
         get() {
             val navHostFragment = activity?.supportFragmentManager
@@ -33,7 +30,11 @@ class StarshipListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    StarshipListScreen(viewModel.starshipList) {}
+                    StarshipListScreen(viewModel.starshipList) {
+                        val index = viewModel.starshipList.indexOf(it)
+                        val action = StarshipListFragmentDirections.actionStarshipInfo(index)
+                        navController?.navigate(action)
+                    }
                 }
             }
         }
