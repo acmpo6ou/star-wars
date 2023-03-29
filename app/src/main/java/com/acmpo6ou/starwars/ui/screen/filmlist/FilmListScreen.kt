@@ -26,9 +26,9 @@ import com.acmpo6ou.starwars.ui.FavoriteButton
 fun FilmListScreen(
     filmList: SnapshotStateList<Film>,
     favorites: SnapshotStateList<String>,
-    navigate: (film: Film) -> Unit,
     addFavorite: (key: String, title: String) -> Unit,
     removeFavorite: (key: String, title: String) -> Unit,
+    navigate: (film: Film) -> Unit,
 ) {
     val films = remember { filmList }
     // TODO: show loading when there are no films

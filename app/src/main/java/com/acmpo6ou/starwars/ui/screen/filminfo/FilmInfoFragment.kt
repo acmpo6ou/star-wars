@@ -37,15 +37,21 @@ class FilmInfoFragment : Fragment() {
                     val film = remember {
                         viewModel.filmsList[args.filmIndex]
                     }
-                    FilmInfoScreen(film, {
-                        viewModel.loadCharacters(it)
-                        val action = FilmInfoFragmentDirections.filmToPeople()
-                        navController?.navigate(action)
-                    }) {
-                        viewModel.loadStarships(it)
-                        val action = FilmInfoFragmentDirections.filmToStarships()
-                        navController?.navigate(action)
-                    }
+                    FilmInfoScreen(
+                        film, viewModel.favoriteFilms,
+                        viewModel::addFavorite,
+                        viewModel::removeFavorite,
+                        {
+                            viewModel.loadCharacters(it)
+                            val action = FilmInfoFragmentDirections.filmToPeople()
+                            navController?.navigate(action)
+                        },
+                        {
+                            viewModel.loadStarships(it)
+                            val action = FilmInfoFragmentDirections.filmToStarships()
+                            navController?.navigate(action)
+                        },
+                    )
                 }
             }
         }

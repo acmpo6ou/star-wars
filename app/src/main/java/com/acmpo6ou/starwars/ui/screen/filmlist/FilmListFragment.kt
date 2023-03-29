@@ -33,18 +33,13 @@ class FilmListFragment : Fragment() {
                     FilmListScreen(
                         viewModel.filmsList,
                         viewModel.favoriteFilms,
-                        {
-                            val index = viewModel.filmsList.indexOf(it)
-                            val action = FilmListFragmentDirections.actionFilmInfo(index)
-                            navController?.navigate(action)
-                        },
-                        { key: String, title: String ->
-                            viewModel.addFavorite(key, title)
-                        },
-                        { key: String, title: String ->
-                            viewModel.removeFavorite(key, title)
-                        },
-                    )
+                        viewModel::addFavorite,
+                        viewModel::removeFavorite,
+                    ) {
+                        val index = viewModel.filmsList.indexOf(it)
+                        val action = FilmListFragmentDirections.actionFilmInfo(index)
+                        navController?.navigate(action)
+                    }
                 }
             }
         }

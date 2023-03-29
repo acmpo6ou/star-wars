@@ -1,13 +1,14 @@
 package com.acmpo6ou.starwars.ui.screen.filminfo
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -15,11 +16,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.acmpo6ou.starwars.R
+import com.acmpo6ou.starwars.model.FavoritesRepo
 import com.acmpo6ou.starwars.model.Film
+import com.acmpo6ou.starwars.ui.FavoriteButton
 
 @Composable
 fun FilmInfoScreen(
     film: Film,
+    favorites: SnapshotStateList<String>,
+    addFavorite: (key: String, title: String) -> Unit,
+    removeFavorite: (key: String, title: String) -> Unit,
     viewCharacters: (urls: List<String>) -> Unit,
     viewStarships: (urls: List<String>) -> Unit,
 ) {
@@ -27,11 +33,19 @@ fun FilmInfoScreen(
         modifier = Modifier.padding(8.dp)
             .verticalScroll(rememberScrollState()),
     ) {
-        Text(
-            text = film.title,
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-        )
+        Row {
+            Text(
+                text = film.title,
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            FavoriteButton(
+                film.title, FavoritesRepo.FAVORITE_FILMS,
+                favorites, addFavorite, removeFavorite,
+            )
+        }
+
         Text(stringResource(R.string.release_date, film.releaseDate))
         Text(stringResource(R.string.directors, film.director))
         Text(stringResource(R.string.producers, film.producer))
@@ -66,6 +80,7 @@ fun FilmInfoScreen(
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 @Preview
 fun FilmInfoPreview() {
@@ -98,6 +113,9 @@ fun FilmInfoPreview() {
             freedom to the galaxy....
             """.trimIndent(),
         ),
-        {},
-    ) {}
+        mutableStateListOf(),
+        { _, _ -> },
+        { _, _ -> },
+        {},{},
+    )
 }
