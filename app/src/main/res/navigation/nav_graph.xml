@@ -24,14 +24,14 @@
             android:name="filmIndex"
             app:argType="integer" />
         <action
-            android:id="@+id/actionPeopleList"
+            android:id="@+id/filmToPeople"
             app:destination="@id/peopleListFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/actionFilmStarshipList"
+            android:id="@+id/filmToStarships"
             app:destination="@id/starshipListFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -58,7 +58,7 @@
             android:name="personIndex"
             app:argType="integer" />
         <action
-            android:id="@+id/actionFilmsList"
+            android:id="@+id/personToFilms"
             app:destination="@id/filmListFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -71,9 +71,34 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/personToStarships"
+            app:destination="@id/starshipListFragment" />
     </fragment>
     <fragment
         android:id="@+id/starshipListFragment"
         android:name="com.acmpo6ou.starwars.ui.screen.starhiplist.StarshipListFragment"
-        android:label="StarshipListFragment" />
+        android:label="StarshipListFragment" >
+        <action
+            android:id="@+id/actionStarshipInfo"
+            app:destination="@id/starshipInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/starshipInfoFragment"
+        android:name="com.acmpo6ou.starwars.ui.screen.starshipinfo.StarshipInfoFragment"
+        android:label="StarshipInfoFragment" >
+        <action
+            android:id="@+id/starshipToPeople"
+            app:destination="@id/peopleListFragment" />
+        <action
+            android:id="@+id/starshipToFilms"
+            app:destination="@id/filmListFragment" />
+        <argument
+            android:name="starshipIndex"
+            app:argType="integer" />
+    </fragment>
 </navigation>

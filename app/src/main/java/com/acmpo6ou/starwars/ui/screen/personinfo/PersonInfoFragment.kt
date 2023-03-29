@@ -38,11 +38,11 @@ class PersonInfoFragment : Fragment() {
                     }
                     PersonInfoScreen(person, {
                         viewModel.loadFilms(it)
-                        val action = PersonInfoFragmentDirections.actionFilmsList()
+                        val action = PersonInfoFragmentDirections.personToFilms()
                         navController?.navigate(action)
                     }) {
                         viewModel.loadStarships(it)
-                        val action = PersonInfoFragmentDirections.actionStarshipList()
+                        val action = PersonInfoFragmentDirections.personToStarships()
                         navController?.navigate(action)
                     }
                 }

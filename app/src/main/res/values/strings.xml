@@ -6,6 +6,7 @@
     <string name="view_films">VIEW FILMS</string>
     <string name="view_characters">VIEW CHARACTERS</string>
     <string name="view_starships">VIEW STARSHIPS</string>
+    <string name="view_pilots">VIEW PILOTS</string>
     <string name="birth_date">Birth date: %s</string>
     <string name="gender">Gender: %s</string>
     <string name="skin_color">Skin color: %s</string>
@@ -17,4 +18,13 @@
     <string name="model">Model: %s</string>
     <string name="hyperdrive_rating">Hyperdrive rating: %s</string>
     <string name="max_speed">Max speed: %s</string>
+    <string name="manufacturer">Manufacturer: %s</string>
+    <string name="starship_class">Class: %s</string>
+    <string name="length">Length: %s</string>
+    <string name="crew">Crew: %s</string>
+    <string name="passengers">Passengers: %s</string>
+    <string name="cargo_capacity">Cargo Capacity: %s</string>
+    <string name="consumables">Consumables: %s</string>
+    <string name="mglt">MGLT: %s</string>
+    <string name="cost_in_cedits">Cost in Credits: %s</string>
 </resources>

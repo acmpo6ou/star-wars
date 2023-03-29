@@ -1,4 +1,4 @@
-package com.acmpo6ou.starwars.ui.screen.filminfo
+package com.acmpo6ou.starwars.ui.screen.starshipinfo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,10 +15,10 @@ import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
 
-class FilmInfoFragment : Fragment() {
+class StarshipInfoFragment : Fragment() {
     // TODO: extract to a superclass
     private val viewModel: MainViewModel by activityViewModels()
-    private val args: FilmInfoFragmentArgs by navArgs()
+    private val args: StarshipInfoFragmentArgs by navArgs()
     private val navController: NavController?
         get() {
             val navHostFragment = activity?.supportFragmentManager
@@ -34,16 +34,16 @@ class FilmInfoFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    val film = remember {
-                        viewModel.filmsList[args.filmIndex]
+                    val starship = remember {
+                        viewModel.starshipList[args.starshipIndex]
                     }
-                    FilmInfoScreen(film, {
+                    StarshipInfoScreen(starship, {
                         viewModel.loadCharacters(it)
-                        val action = FilmInfoFragmentDirections.filmToPeople()
+                        val action = StarshipInfoFragmentDirections.starshipToPeople()
                         navController?.navigate(action)
                     }) {
-                        viewModel.loadStarships(it)
-                        val action = FilmInfoFragmentDirections.filmToStarships()
+                        viewModel.loadFilms(it)
+                        val action = StarshipInfoFragmentDirections.starshipToFilms()
                         navController?.navigate(action)
                     }
                 }
