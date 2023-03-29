@@ -14,4 +14,7 @@
     <string name="mass">Mass: %s</string>
     <string name="height">Height: %s</string>
     <string name="home_world">Home world: %s</string>
+    <string name="model">Model: %s</string>
+    <string name="hyperdrive_rating">Hyperdrive rating: %s</string>
+    <string name="max_speed">Max speed: %s</string>
 </resources>
