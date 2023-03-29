@@ -40,24 +40,29 @@ fun FilmInfoScreen(
             fontSize = 18.sp,
         )
 
-        Text(
-            text = stringResource(R.string.view_characters),
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-            modifier = Modifier
-                .clickable { viewCharacters(film.characters) }
-                .fillMaxWidth()
-                .padding(8.dp),
-        )
-        Text(
-            text = stringResource(R.string.view_starships),
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-            modifier = Modifier
-                .clickable { viewStarships(film.starships) }
-                .fillMaxWidth()
-                .padding(8.dp),
-        )
+        if (film.characters.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.view_characters),
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+                modifier = Modifier
+                    .clickable { viewCharacters(film.characters) }
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            )
+        }
+
+        if (film.starships.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.view_starships),
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+                modifier = Modifier
+                    .clickable { viewStarships(film.starships) }
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            )
+        }
     }
 }
 

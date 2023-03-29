@@ -40,23 +40,28 @@ fun PersonInfoScreen(
         Text(stringResource(R.string.height, person.height))
         Text(stringResource(R.string.home_world, person.homeworld))
 
-        Text(
-            text = stringResource(R.string.view_films),
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-            modifier = Modifier
-                .clickable { viewFilms(person.films) }
-                .fillMaxWidth()
-                .padding(8.dp),
-        )
-        Text(
-            text = stringResource(R.string.view_starships),
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-            modifier = Modifier
-                .clickable { viewStarships(person.starships) }
-                .fillMaxWidth()
-                .padding(8.dp),
-        )
+        if (person.films.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.view_films),
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+                modifier = Modifier
+                    .clickable { viewFilms(person.films) }
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            )
+        }
+
+        if (person.starships.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.view_starships),
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+                modifier = Modifier
+                    .clickable { viewStarships(person.starships) }
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            )
+        }
     }
 }

@@ -44,23 +44,28 @@ fun StarshipInfoScreen(
         Text(stringResource(R.string.mglt, starship.MGLT))
         Text(stringResource(R.string.cost_in_cedits, starship.costInCredits))
 
-        Text(
-            text = stringResource(R.string.view_pilots),
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-            modifier = Modifier
-                .clickable { viewPilots(starship.pilots) }
-                .fillMaxWidth()
-                .padding(8.dp),
-        )
-        Text(
-            text = stringResource(R.string.view_films),
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-            modifier = Modifier
-                .clickable { viewFilms(starship.films) }
-                .fillMaxWidth()
-                .padding(8.dp),
-        )
+        if (starship.pilots.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.view_pilots),
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+                modifier = Modifier
+                    .clickable { viewPilots(starship.pilots) }
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            )
+        }
+
+        if (starship.films.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.view_films),
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+                modifier = Modifier
+                    .clickable { viewFilms(starship.films) }
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            )
+        }
     }
 }
