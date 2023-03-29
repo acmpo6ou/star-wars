@@ -29,4 +29,8 @@
     <string name="cost_in_cedits">Cost in Credits: %s</string>
     <string name="add_favorite">Add %s to favorites</string>
     <string name="remove_favorite">Remove %s from favorites</string>
+    <string name="films">Films</string>
+    <string name="people">People</string>
+    <string name="starships">Starships</string>
+    <string name="favorites">Favorites</string>
 </resources>

@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/filmListFragment"
         android:name="com.acmpo6ou.starwars.ui.screen.filmlist.FilmListFragment"
-        android:label="FilmListFragment" >
+        android:label="Films" >
         <action
             android:id="@+id/actionFilmInfo"
             app:destination="@id/filmInfoFragment"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/filmInfoFragment"
         android:name="com.acmpo6ou.starwars.ui.screen.filminfo.FilmInfoFragment"
-        android:label="FilmInfoFragment" >
+        android:label="Film Info" >
         <argument
             android:name="filmIndex"
             app:argType="integer" />
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/peopleListFragment"
         android:name="com.acmpo6ou.starwars.ui.screen.peoplelist.PeopleListFragment"
-        android:label="PeopleListFragment" >
+        android:label="People" >
         <action
             android:id="@+id/actionPersonInfo"
             app:destination="@id/personInfoFragment"
@@ -53,7 +53,7 @@
     <fragment
         android:id="@+id/personInfoFragment"
         android:name="com.acmpo6ou.starwars.ui.screen.personinfo.PersonInfoFragment"
-        android:label="PersonInfoFragment" >
+        android:label="Person Info" >
         <argument
             android:name="personIndex"
             app:argType="integer" />
@@ -78,7 +78,7 @@
     <fragment
         android:id="@+id/starshipListFragment"
         android:name="com.acmpo6ou.starwars.ui.screen.starhiplist.StarshipListFragment"
-        android:label="StarshipListFragment" >
+        android:label="Starships" >
         <action
             android:id="@+id/actionStarshipInfo"
             app:destination="@id/starshipInfoFragment"
@@ -90,7 +90,7 @@
     <fragment
         android:id="@+id/starshipInfoFragment"
         android:name="com.acmpo6ou.starwars.ui.screen.starshipinfo.StarshipInfoFragment"
-        android:label="StarshipInfoFragment" >
+        android:label="Starship Info" >
         <action
             android:id="@+id/starshipToPeople"
             app:destination="@id/peopleListFragment" />
