@@ -40,7 +40,11 @@ class PersonInfoFragment : Fragment() {
                         viewModel.loadFilms(it)
                         val action = PersonInfoFragmentDirections.actionFilmsList()
                         navController?.navigate(action)
-                    }) {}
+                    }) {
+                        viewModel.loadStarships(it)
+                        val action = PersonInfoFragmentDirections.actionStarshipList()
+                        navController?.navigate(action)
+                    }
                 }
             }
         }
