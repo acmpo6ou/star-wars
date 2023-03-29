@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -15,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITE_FILMS
 import com.acmpo6ou.starwars.model.Film
+import com.acmpo6ou.starwars.ui.FavoriteButton
 
 @Composable
 fun FilmListScreen(
@@ -36,7 +34,7 @@ fun FilmListScreen(
     // TODO: show loading when there are no films
     LazyColumn() {
         items(items = films, key = { film: Film -> film.episodeId }) {
-            FilmItem(it, favorites, navigate, addFavorite, removeFavorite)
+            FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
         }
     }
 }
@@ -45,9 +43,9 @@ fun FilmListScreen(
 fun FilmItem(
     film: Film,
     favorites: SnapshotStateList<String>,
-    navigate: (film: Film) -> Unit,
     addFavorite: (key: String, title: String) -> Unit,
     removeFavorite: (key: String, title: String) -> Unit,
+    navigate: (film: Film) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -67,22 +65,10 @@ fun FilmItem(
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.weight(1f))
-
-                if (film.title in favorites) {
-                    IconButton(onClick = { removeFavorite(FAVORITE_FILMS, film.title) }) {
-                        Icon(
-                            painterResource(R.drawable.favorite),
-                            stringResource(R.string.remove_favorite, film.title),
-                        )
-                    }
-                } else {
-                    IconButton(onClick = { addFavorite(FAVORITE_FILMS, film.title) }) {
-                        Icon(
-                            painterResource(R.drawable.favorite_border),
-                            stringResource(R.string.add_favorite, film.title),
-                        )
-                    }
-                }
+                FavoriteButton(
+                    film.title, FAVORITE_FILMS,
+                    favorites, addFavorite, removeFavorite,
+                )
             }
             Text(stringResource(R.string.release_date, film.releaseDate))
             Text(stringResource(R.string.directors, film.director))
@@ -103,7 +89,7 @@ fun FilmItemPreview() {
             producer = "Gary Kurtz, Rick McCallum",
         ),
         mutableStateListOf(),
-        {},
         { _, _ -> },
-    ) { _, _ -> }
+        { _, _ -> },
+    ) {}
 }

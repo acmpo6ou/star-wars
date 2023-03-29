@@ -22,7 +22,7 @@ class MainViewModel : ViewModel() {
     val favoritePeople = mutableStateListOf<String>()
     val favoriteStarships = mutableStateListOf<String>()
 
-    val favorites = mapOf(
+    private val favorites = mapOf(
         FAVORITE_FILMS to favoriteFilms,
         FAVORITE_PEOPLE to favoritePeople,
         FAVORITE_STARSHIPS to favoriteStarships,

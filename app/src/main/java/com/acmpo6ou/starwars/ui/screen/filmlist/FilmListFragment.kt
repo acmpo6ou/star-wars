@@ -11,7 +11,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
-import com.acmpo6ou.starwars.model.Film
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
 
 class FilmListFragment : Fragment() {
