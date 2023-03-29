@@ -1,24 +1,28 @@
 package com.acmpo6ou.starwars.ui.screen.starshipinfo
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.acmpo6ou.starwars.R
+import com.acmpo6ou.starwars.model.FavoritesRepo
 import com.acmpo6ou.starwars.model.Starship
+import com.acmpo6ou.starwars.ui.FavoriteButton
 
 @Composable
 fun StarshipInfoScreen(
     starship: Starship,
+    favorites: SnapshotStateList<String>,
+    addFavorite: (key: String, title: String) -> Unit,
+    removeFavorite: (key: String, title: String) -> Unit,
     viewPilots: (urls: List<String>) -> Unit,
     viewFilms: (urls: List<String>) -> Unit,
 ) {
@@ -26,11 +30,19 @@ fun StarshipInfoScreen(
         modifier = Modifier.padding(8.dp)
             .verticalScroll(rememberScrollState()),
     ) {
-        Text(
-            text = starship.name,
-            fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
-        )
+        Row {
+            Text(
+                text = starship.name,
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            FavoriteButton(
+                starship.name, FavoritesRepo.FAVORITE_STARSHIPS,
+                favorites, addFavorite, removeFavorite,
+            )
+        }
+
         Text(stringResource(R.string.model, starship.model))
         Text(stringResource(R.string.hyperdrive_rating, starship.hyperdriveRating))
         Text(stringResource(R.string.max_speed, starship.maxAtmospheringSpeed))

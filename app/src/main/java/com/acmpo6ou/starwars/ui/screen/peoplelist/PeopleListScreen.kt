@@ -1,10 +1,7 @@
 package com.acmpo6ou.starwars.ui.screen.peoplelist
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
@@ -18,24 +15,35 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.acmpo6ou.starwars.R
+import com.acmpo6ou.starwars.model.FavoritesRepo
 import com.acmpo6ou.starwars.model.Person
+import com.acmpo6ou.starwars.ui.FavoriteButton
 
 @Composable
 fun PeopleListScreen(
     peopleList: SnapshotStateList<Person>,
+    favorites: SnapshotStateList<String>,
+    addFavorite: (key: String, title: String) -> Unit,
+    removeFavorite: (key: String, title: String) -> Unit,
     navigate: (person: Person) -> Unit,
 ) {
     val people = remember { peopleList }
     // TODO: show loading when there are no films
-    LazyColumn() {
+    LazyColumn {
         items(items = people, key = { person: Person -> person.name }) {
-            PersonItem(it, navigate)
+            PersonItem(it, favorites, addFavorite, removeFavorite, navigate)
         }
     }
 }
 
 @Composable
-fun PersonItem(person: Person, navigate: (person: Person) -> Unit) {
+fun PersonItem(
+    person: Person,
+    favorites: SnapshotStateList<String>,
+    addFavorite: (key: String, title: String) -> Unit,
+    removeFavorite: (key: String, title: String) -> Unit,
+    navigate: (person: Person) -> Unit,
+) {
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -47,11 +55,19 @@ fun PersonItem(person: Person, navigate: (person: Person) -> Unit) {
         Column(
             modifier = Modifier.padding(8.dp),
         ) {
-            Text(
-                text = person.name,
-                // TODO: why doesn't it work?
-                fontWeight = FontWeight.Bold,
-            )
+            Row {
+                Text(
+                    text = person.name,
+                    // TODO: why doesn't it work?
+                    fontWeight = FontWeight.Bold,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                FavoriteButton(
+                    person.name, FavoritesRepo.FAVORITE_PEOPLE,
+                    favorites, addFavorite, removeFavorite,
+                )
+            }
+
             Text(stringResource(R.string.birth_date, person.birthYear))
             Text(stringResource(R.string.gender, person.gender))
             Text(stringResource(R.string.skin_color, person.skinColor))

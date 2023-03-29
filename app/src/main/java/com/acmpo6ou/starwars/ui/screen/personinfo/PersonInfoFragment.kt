@@ -36,15 +36,21 @@ class PersonInfoFragment : Fragment() {
                     val person = remember {
                         viewModel.peopleList[args.personIndex]
                     }
-                    PersonInfoScreen(person, {
-                        viewModel.loadFilms(it)
-                        val action = PersonInfoFragmentDirections.personToFilms()
-                        navController?.navigate(action)
-                    }) {
-                        viewModel.loadStarships(it)
-                        val action = PersonInfoFragmentDirections.personToStarships()
-                        navController?.navigate(action)
-                    }
+                    PersonInfoScreen(
+                        person, viewModel.favoritePeople,
+                        viewModel::addFavorite,
+                        viewModel::removeFavorite,
+                        {
+                            viewModel.loadFilms(it)
+                            val action = PersonInfoFragmentDirections.personToFilms()
+                            navController?.navigate(action)
+                        },
+                        {
+                            viewModel.loadStarships(it)
+                            val action = PersonInfoFragmentDirections.personToStarships()
+                            navController?.navigate(action)
+                        }
+                    )
                 }
             }
         }

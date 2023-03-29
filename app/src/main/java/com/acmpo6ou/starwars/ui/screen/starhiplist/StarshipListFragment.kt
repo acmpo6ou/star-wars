@@ -30,7 +30,12 @@ class StarshipListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    StarshipListScreen(viewModel.starshipList) {
+                    StarshipListScreen(
+                        viewModel.starshipList,
+                        viewModel.favoriteStarships,
+                        viewModel::addFavorite,
+                        viewModel::removeFavorite,
+                    ) {
                         val index = viewModel.starshipList.indexOf(it)
                         val action = StarshipListFragmentDirections.actionStarshipInfo(index)
                         navController?.navigate(action)

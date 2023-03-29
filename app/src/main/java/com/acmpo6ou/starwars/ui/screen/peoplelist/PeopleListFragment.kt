@@ -30,7 +30,12 @@ class PeopleListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    PeopleListScreen(viewModel.peopleList) {
+                    PeopleListScreen(
+                        viewModel.peopleList,
+                        viewModel.favoritePeople,
+                        viewModel::addFavorite,
+                        viewModel::removeFavorite,
+                    ) {
                         val index = viewModel.peopleList.indexOf(it)
                         val action = PeopleListFragmentDirections.actionPersonInfo(index)
                         navController?.navigate(action)

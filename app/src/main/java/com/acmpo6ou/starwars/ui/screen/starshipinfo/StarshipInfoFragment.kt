@@ -37,15 +37,20 @@ class StarshipInfoFragment : Fragment() {
                     val starship = remember {
                         viewModel.starshipList[args.starshipIndex]
                     }
-                    StarshipInfoScreen(starship, {
-                        viewModel.loadCharacters(it)
-                        val action = StarshipInfoFragmentDirections.starshipToPeople()
-                        navController?.navigate(action)
-                    }) {
-                        viewModel.loadFilms(it)
-                        val action = StarshipInfoFragmentDirections.starshipToFilms()
-                        navController?.navigate(action)
-                    }
+                    StarshipInfoScreen(
+                        starship, viewModel.favoriteStarships,
+                        viewModel::addFavorite,
+                        viewModel::removeFavorite,
+                        {
+                            viewModel.loadCharacters(it)
+                            val action = StarshipInfoFragmentDirections.starshipToPeople()
+                            navController?.navigate(action)
+                        }, {
+                            viewModel.loadFilms(it)
+                            val action = StarshipInfoFragmentDirections.starshipToFilms()
+                            navController?.navigate(action)
+                        }
+                    )
                 }
             }
         }
