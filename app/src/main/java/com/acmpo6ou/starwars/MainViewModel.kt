@@ -34,6 +34,12 @@ class MainViewModel : ViewModel() {
         FAVORITE_STARSHIPS to favoriteStarshipUrls,
     )
 
+    private val favorites = mapOf(
+        FAVORITE_FILMS to favoriteFilms,
+        FAVORITE_PEOPLE to favoritePeople,
+        FAVORITE_STARSHIPS to favoriteStarships,
+    )
+
     fun initialize(mainRepo: MainRepo, favoritesRepo: FavoritesRepo) {
         this.mainRepo = mainRepo
         this.favoritesRepo = favoritesRepo
@@ -76,6 +82,9 @@ class MainViewModel : ViewModel() {
     fun removeFavorite(key: String, value: String) {
         favoriteUrls[key]?.remove(value)
         favoritesRepo.saveFavoriteUrls(key, favoriteUrls[key] ?: listOf())
+        favorites[key]?.firstOrNull { it.url == value }?.let {
+            favorites[key]?.remove(it)
+        }
     }
 
     private fun loadFilms() {

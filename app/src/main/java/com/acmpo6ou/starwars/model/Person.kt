@@ -22,9 +22,9 @@ data class Person(
     val edited: String,
     val species: List<String>,
     val starships: List<String>,
-    val url: String,
+    override val url: String,
     val vehicles: List<String>,
-)
+) : Item
 
 @Serializable
 data class People(val result: List<Person>)

@@ -27,8 +27,8 @@ data class Starship(
     val pilots: List<String>,
     @SerialName("starship_class")
     val starshipClass: String,
-    val url: String,
-)
+    override val url: String,
+) : Item
 
 @Serializable
 data class Starships(val results: List<Starship>)

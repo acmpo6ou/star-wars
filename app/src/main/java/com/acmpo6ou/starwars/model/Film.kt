@@ -18,8 +18,8 @@ data class Film(
     val producer: String = "",
     val created: String = "",
     val edited: String = "",
-    val url: String = "",
-)
+    override val url: String = "",
+) : Item
 
 @Serializable
 data class Films(val results: List<Film>)
