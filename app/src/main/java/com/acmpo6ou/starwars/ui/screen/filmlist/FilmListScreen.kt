@@ -17,14 +17,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.MutableLiveData
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITE_FILMS
 import com.acmpo6ou.starwars.model.Film
 import com.acmpo6ou.starwars.ui.FavoriteButton
+import com.acmpo6ou.starwars.ui.SearchField
 
 @Composable
 fun FilmListScreen(
     filmList: SnapshotStateList<Film>,
+    searchText: MutableLiveData<String>,
     favorites: SnapshotStateList<String>,
     addFavorite: (key: String, title: String) -> Unit,
     removeFavorite: (key: String, title: String) -> Unit,
@@ -33,6 +36,9 @@ fun FilmListScreen(
     val films = remember { filmList }
     // TODO: show loading when there are no films
     LazyColumn() {
+        item {
+            SearchField(searchText)
+        }
         items(items = films, key = { film: Film -> film.episodeId }) {
             FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
         }
@@ -66,8 +72,11 @@ fun FilmItem(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FavoriteButton(
-                    film.url, FAVORITE_FILMS,
-                    favorites, addFavorite, removeFavorite,
+                    film.url,
+                    FAVORITE_FILMS,
+                    favorites,
+                    addFavorite,
+                    removeFavorite,
                 )
             }
             Text(stringResource(R.string.release_date, film.releaseDate))

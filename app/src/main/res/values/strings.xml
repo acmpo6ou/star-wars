@@ -36,4 +36,5 @@
     <string name="favorite_films">Favorite films</string>
     <string name="favorite_people">Favorite people</string>
     <string name="favorite_starships">Favorite starships</string>
+    <string name="search">Search</string>
 </resources>

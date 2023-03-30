@@ -2,6 +2,7 @@ package com.acmpo6ou.starwars
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.acmpo6ou.starwars.model.*
@@ -15,6 +16,7 @@ import kotlin.reflect.KSuspendFunction1
 class MainViewModel : ViewModel() {
     private lateinit var mainRepo: MainRepo
     private lateinit var favoritesRepo: FavoritesRepo
+    val searchText = MutableLiveData<String>("")
 
     val filmsList = mutableStateListOf<Film>()
     val peopleList = mutableStateListOf<Person>()

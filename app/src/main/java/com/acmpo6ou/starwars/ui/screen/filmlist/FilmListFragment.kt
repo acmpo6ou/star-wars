@@ -34,6 +34,7 @@ class FilmListFragment : Fragment() {
                 StarWarsTheme {
                     FilmListScreen(
                         viewModel.filmsList,
+                        viewModel.searchText,
                         viewModel.favoriteFilmUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,

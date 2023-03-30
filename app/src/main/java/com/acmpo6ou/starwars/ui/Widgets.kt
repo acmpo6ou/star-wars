@@ -1,11 +1,19 @@
 package com.acmpo6ou.starwars.ui
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.MutableLiveData
 import com.acmpo6ou.starwars.R
 
 @Composable
@@ -31,4 +39,22 @@ fun FavoriteButton(
             )
         }
     }
+}
+
+@Composable
+fun SearchField(
+    searchText: MutableLiveData<String>,
+) {
+    val text = searchText.observeAsState()
+    OutlinedTextField(
+        value = text.value ?: "",
+        onValueChange = { value: String ->
+            searchText.value = value
+        },
+        label = { Text(stringResource(R.string.search)) },
+        singleLine = true,
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth(),
+    )
 }
