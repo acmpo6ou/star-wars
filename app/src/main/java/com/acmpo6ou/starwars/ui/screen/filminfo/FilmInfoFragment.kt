@@ -45,13 +45,13 @@ class FilmInfoFragment : Fragment() {
                         viewModel::removeFavorite,
                         {
                             viewModel.loadCharacters(it)
-                            val action = FilmInfoFragmentDirections.filmToPeople()
-                            navController?.navigate(action)
+                            navController?.popBackStack(R.id.nav_graph, true)
+                            navController?.navigate(R.id.peopleListFragment)
                         },
                         {
                             viewModel.loadStarships(it)
-                            val action = FilmInfoFragmentDirections.filmToStarships()
-                            navController?.navigate(action)
+                            navController?.popBackStack(R.id.nav_graph, true)
+                            navController?.navigate(R.id.starshipListFragment)
                         },
                     )
                 }
