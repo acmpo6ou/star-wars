@@ -16,7 +16,12 @@ import com.acmpo6ou.starwars.ui.screen.peoplelist.PersonItem
 import com.acmpo6ou.starwars.ui.screen.starhiplist.StarshipItem
 
 @Composable
-fun FavoritesScreen(viewModel: MainViewModel) {
+fun FavoritesScreen(
+    viewModel: MainViewModel,
+    navigateFilm: (film: Film) -> Unit,
+    navigatePerson: (person: Person) -> Unit,
+    navigateStarship: (starship: Starship) -> Unit,
+) {
     // TODO: show loading when there are no films
     val films = remember { viewModel.favoriteFilms }
     val people = remember { viewModel.favoritePeople }
@@ -31,7 +36,8 @@ fun FavoritesScreen(viewModel: MainViewModel) {
                 viewModel.favoriteFilmUrls,
                 viewModel::addFavorite,
                 viewModel::removeFavorite,
-            ) {}
+                navigateFilm,
+            )
         }
 
         if (people.size > 0) {
@@ -43,7 +49,8 @@ fun FavoritesScreen(viewModel: MainViewModel) {
                 viewModel.favoritePeopleUrls,
                 viewModel::addFavorite,
                 viewModel::removeFavorite,
-            ) {}
+                navigatePerson,
+            )
         }
 
         if (starships.size > 0) {
@@ -55,7 +62,8 @@ fun FavoritesScreen(viewModel: MainViewModel) {
                 viewModel.favoriteStarshipUrls,
                 viewModel::addFavorite,
                 viewModel::removeFavorite,
-            ) {}
+                navigateStarship,
+            )
         }
     }
 }

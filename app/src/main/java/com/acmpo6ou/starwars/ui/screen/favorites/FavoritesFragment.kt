@@ -11,6 +11,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
+import com.acmpo6ou.starwars.ui.screen.filmlist.FilmListFragmentDirections
+import com.acmpo6ou.starwars.ui.screen.peoplelist.PeopleListFragmentDirections
+import com.acmpo6ou.starwars.ui.screen.starhiplist.StarshipListFragmentDirections
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
 
 class FavoritesFragment : Fragment() {
@@ -32,7 +35,24 @@ class FavoritesFragment : Fragment() {
                 StarWarsTheme {
                     // TODO: ensure it's always loaded correctly
                     viewModel.loadFavorites()
-                    FavoritesScreen(viewModel)
+                    FavoritesScreen(
+                        viewModel,
+                        {
+                            val index = viewModel.filmsList.indexOf(it)
+                            val action = FilmListFragmentDirections.actionFilmInfo(index)
+                            navController?.navigate(action)
+                        },
+                        {
+                            val index = viewModel.peopleList.indexOf(it)
+                            val action = PeopleListFragmentDirections.actionPersonInfo(index)
+                            navController?.navigate(action)
+                        },
+                        {
+                            val index = viewModel.starshipList.indexOf(it)
+                            val action = StarshipListFragmentDirections.actionStarshipInfo(index)
+                            navController?.navigate(action)
+                        },
+                    )
                 }
             }
         }
