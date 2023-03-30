@@ -60,13 +60,13 @@ fun FilmItem(
         ) {
             Row {
                 Text(
-                    text = film.url,
+                    text = film.title,
                     // TODO: why doesn't it work?
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FavoriteButton(
-                    film.title, FAVORITE_FILMS,
+                    film.url, FAVORITE_FILMS,
                     favorites, addFavorite, removeFavorite,
                 )
             }

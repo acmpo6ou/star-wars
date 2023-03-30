@@ -31,13 +31,13 @@ fun StarshipListScreen(
     // TODO: show loading when there are no films
     LazyColumn() {
         items(items = starships, key = { starship: Starship -> starship.name }) {
-            FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
+            StarshipItem(it, favorites, addFavorite, removeFavorite, navigate)
         }
     }
 }
 
 @Composable
-fun FilmItem(
+fun StarshipItem(
     starship: Starship,
     favorites: SnapshotStateList<String>,
     addFavorite: (key: String, title: String) -> Unit,

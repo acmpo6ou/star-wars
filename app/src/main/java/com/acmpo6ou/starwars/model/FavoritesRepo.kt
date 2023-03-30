@@ -1,13 +1,8 @@
 package com.acmpo6ou.starwars.model
 
 import android.content.SharedPreferences
-import com.acmpo6ou.starwars.client.FilmsClient
-import retrofit2.Retrofit
 
-class FavoritesRepo(
-    private val retrofit: Retrofit,
-    private val prefs: SharedPreferences,
-) {
+class FavoritesRepo(private val prefs: SharedPreferences) {
     fun getFavoriteUrls(key: String): List<String> {
         return prefs.getStringSet(key, setOf())?.toList() ?: listOf()
     }

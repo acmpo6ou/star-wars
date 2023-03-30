@@ -101,4 +101,8 @@
             android:name="starshipIndex"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.acmpo6ou.starwars.ui.screen.favorites.FavoritesFragment"
+        android:label="FavoritesFragment" />
 </navigation>
