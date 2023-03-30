@@ -13,7 +13,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
+import com.acmpo6ou.starwars.model.Starship
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 class StarshipInfoFragment : Fragment() {
     // TODO: extract to a superclass
@@ -34,22 +37,22 @@ class StarshipInfoFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    val starship = remember {
-                        viewModel.starshipList[args.starshipIndex]
-                    }
+                    val starship = remember { Json.decodeFromString<Starship>(args.json) }
                     StarshipInfoScreen(
-                        starship, viewModel.favoriteStarshipUrls,
+                        starship,
+                        viewModel.favoriteStarshipUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
                         {
                             viewModel.loadCharacters(it)
                             val action = StarshipInfoFragmentDirections.starshipToPeople()
                             navController?.navigate(action)
-                        }, {
+                        },
+                        {
                             viewModel.loadFilms(it)
                             val action = StarshipInfoFragmentDirections.starshipToFilms()
                             navController?.navigate(action)
-                        }
+                        },
                     )
                 }
             }

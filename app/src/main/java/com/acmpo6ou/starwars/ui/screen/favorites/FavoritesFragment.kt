@@ -12,6 +12,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class FavoritesFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
@@ -35,18 +37,18 @@ class FavoritesFragment : Fragment() {
                     FavoritesScreen(
                         viewModel,
                         {
-                            val index = viewModel.filmsList.indexOf(it)
-                            val action = FavoritesFragmentDirections.favToFilm(index)
+                            val json = Json.encodeToString(it)
+                            val action = FavoritesFragmentDirections.favToFilm(json)
                             navController?.navigate(action)
                         },
                         {
-                            val index = viewModel.peopleList.indexOf(it)
-                            val action = FavoritesFragmentDirections.favToPerson(index)
+                            val json = Json.encodeToString(it)
+                            val action = FavoritesFragmentDirections.favToPerson(json)
                             navController?.navigate(action)
                         },
                         {
-                            val index = viewModel.starshipList.indexOf(it)
-                            val action = FavoritesFragmentDirections.favToStarship(index)
+                            val json = Json.encodeToString(it)
+                            val action = FavoritesFragmentDirections.favToStarship(json)
                             navController?.navigate(action)
                         },
                     )

@@ -5,25 +5,25 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Person(
     @SerialName("birth_year")
-    val birthYear: String,
+    val birthYear: String = "",
     @SerialName("eye_color")
-    val eyeColor: String,
-    val films: List<String>,
-    val gender: String,
+    val eyeColor: String = "",
+    val films: List<String> = listOf(),
+    val gender: String = "",
     @SerialName("hair_color")
-    val hairColor: String,
-    val height: String,
-    val homeworld: String,
-    val mass: String,
-    val name: String,
+    val hairColor: String = "",
+    val height: String = "",
+    val homeworld: String = "",
+    val mass: String = "",
+    val name: String = "",
     @SerialName("skin_color")
-    val skinColor: String,
-    val created: String,
-    val edited: String,
-    val species: List<String>,
-    val starships: List<String>,
-    override val url: String,
-    val vehicles: List<String>,
+    val skinColor: String = "",
+    val created: String = "",
+    val edited: String = "",
+    val species: List<String> = listOf(),
+    val starships: List<String> = listOf(),
+    override val url: String = "",
+    val vehicles: List<String> = listOf(),
 ) : Item
 
 @Serializable

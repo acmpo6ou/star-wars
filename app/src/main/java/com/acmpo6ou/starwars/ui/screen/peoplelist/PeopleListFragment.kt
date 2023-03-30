@@ -12,6 +12,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class PeopleListFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
@@ -36,8 +38,8 @@ class PeopleListFragment : Fragment() {
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
                     ) {
-                        val index = viewModel.peopleList.indexOf(it)
-                        val action = PeopleListFragmentDirections.actionPersonInfo(index)
+                        val json = Json.encodeToString(it)
+                        val action = PeopleListFragmentDirections.actionPersonInfo(json)
                         navController?.navigate(action)
                     }
                 }

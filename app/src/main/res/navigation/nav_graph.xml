@@ -21,8 +21,8 @@
         android:name="com.acmpo6ou.starwars.ui.screen.filminfo.FilmInfoFragment"
         android:label="Film Info" >
         <argument
-            android:name="filmIndex"
-            app:argType="integer" />
+            android:name="json"
+            app:argType="string" />
         <action
             android:id="@+id/filmToPeople"
             app:destination="@id/peopleListFragment"
@@ -55,8 +55,8 @@
         android:name="com.acmpo6ou.starwars.ui.screen.personinfo.PersonInfoFragment"
         android:label="Person Info" >
         <argument
-            android:name="personIndex"
-            app:argType="integer" />
+            android:name="json"
+            app:argType="string" />
         <action
             android:id="@+id/personToFilms"
             app:destination="@id/filmListFragment"
@@ -98,8 +98,8 @@
             android:id="@+id/starshipToFilms"
             app:destination="@id/filmListFragment" />
         <argument
-            android:name="starshipIndex"
-            app:argType="integer" />
+            android:name="json"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"

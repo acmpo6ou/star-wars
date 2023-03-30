@@ -13,7 +13,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
+import com.acmpo6ou.starwars.model.Film
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 class FilmInfoFragment : Fragment() {
     // TODO: extract to a superclass
@@ -34,11 +37,10 @@ class FilmInfoFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    val film = remember {
-                        viewModel.filmsList[args.filmIndex]
-                    }
+                    val film = remember { Json.decodeFromString<Film>(args.json) }
                     FilmInfoScreen(
-                        film, viewModel.favoriteFilmUrls,
+                        film,
+                        viewModel.favoriteFilmUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
                         {

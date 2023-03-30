@@ -13,7 +13,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
+import com.acmpo6ou.starwars.model.Person
+import com.acmpo6ou.starwars.model.Starship
 import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 class PersonInfoFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
@@ -33,11 +37,10 @@ class PersonInfoFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    val person = remember {
-                        viewModel.peopleList[args.personIndex]
-                    }
+                    val person = remember { Json.decodeFromString<Person>(args.json) }
                     PersonInfoScreen(
-                        person, viewModel.favoritePeopleUrls,
+                        person,
+                        viewModel.favoritePeopleUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
                         {
@@ -49,7 +52,7 @@ class PersonInfoFragment : Fragment() {
                             viewModel.loadStarships(it)
                             val action = PersonInfoFragmentDirections.personToStarships()
                             navController?.navigate(action)
-                        }
+                        },
                     )
                 }
             }
