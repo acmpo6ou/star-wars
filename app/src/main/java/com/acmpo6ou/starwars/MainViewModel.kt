@@ -49,6 +49,7 @@ class MainViewModel : ViewModel() {
         this.mainRepo = mainRepo
         this.favoritesRepo = favoritesRepo
         loadFavoriteUrls()
+        loadFilms()
     }
 
     private fun <T> getItems(
