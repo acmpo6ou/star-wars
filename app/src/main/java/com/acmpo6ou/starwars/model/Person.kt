@@ -27,4 +27,4 @@ data class Person(
 ) : Item
 
 @Serializable
-data class People(val result: List<Person>)
+data class People(val results: List<Person>)

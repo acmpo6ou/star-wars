@@ -56,6 +56,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         navController.popBackStack(R.id.nav_graph, true)
+        when (item.itemId) {
+            R.id.favoritesFragment -> viewModel.loadFavorites()
+            R.id.filmListFragment -> viewModel.loadFilms()
+            R.id.peopleListFragment -> viewModel.loadPeople()
+            R.id.starshipListFragment -> viewModel.loadStarships()
+        }
         navController.navigate(item.itemId)
         return true
     }

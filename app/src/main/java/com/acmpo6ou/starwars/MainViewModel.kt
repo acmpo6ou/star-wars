@@ -43,7 +43,6 @@ class MainViewModel : ViewModel() {
     fun initialize(mainRepo: MainRepo, favoritesRepo: FavoritesRepo) {
         this.mainRepo = mainRepo
         this.favoritesRepo = favoritesRepo
-        loadFilms()
         loadFavoriteUrls()
     }
 
@@ -70,7 +69,7 @@ class MainViewModel : ViewModel() {
 
     fun loadFavorites() {
         getFavorites(favoriteFilms, favoriteFilmUrls, mainRepo::getFilms)
-        getFavorites(favoritePeople, favoritePeopleUrls, mainRepo::getCharacters)
+        getFavorites(favoritePeople, favoritePeopleUrls, mainRepo::getPeople)
         getFavorites(favoriteStarships, favoriteStarshipUrls, mainRepo::getStarships)
     }
 
@@ -87,12 +86,32 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private fun loadFilms() {
+    fun loadFilms() {
         viewModelScope.launch(Dispatchers.Default) {
             val films = mainRepo.loadFilms()
             viewModelScope.launch(Dispatchers.Main) {
                 filmsList.clear()
                 filmsList.addAll(films)
+            }
+        }
+    }
+
+    fun loadPeople() {
+        viewModelScope.launch(Dispatchers.Default) {
+            val people = mainRepo.loadPeople()
+            viewModelScope.launch(Dispatchers.Main) {
+                peopleList.clear()
+                peopleList.addAll(people)
+            }
+        }
+    }
+
+    fun loadStarships() {
+        viewModelScope.launch(Dispatchers.Default) {
+            val starships = mainRepo.loadStarships()
+            viewModelScope.launch(Dispatchers.Main) {
+                starshipList.clear()
+                starshipList.addAll(starships)
             }
         }
     }
@@ -109,7 +128,7 @@ class MainViewModel : ViewModel() {
 
     fun loadCharacters(urls: List<String>) {
         viewModelScope.launch(Dispatchers.Default) {
-            val characters = mainRepo.getCharacters(urls)
+            val characters = mainRepo.getPeople(urls)
             viewModelScope.launch(Dispatchers.Main) {
                 peopleList.clear()
                 peopleList.addAll(characters)

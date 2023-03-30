@@ -32,8 +32,6 @@ class FavoritesFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 StarWarsTheme {
-                    // TODO: ensure it's always loaded correctly
-                    viewModel.loadFavorites()
                     FavoritesScreen(
                         viewModel,
                         {

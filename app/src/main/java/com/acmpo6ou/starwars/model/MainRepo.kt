@@ -17,6 +17,24 @@ class MainRepo(private val retrofit: Retrofit) {
             ?: listOf()
     }
 
+    suspend fun loadPeople(): List<Person> {
+        val service = retrofit.create(PeopleClient::class.java)
+        return service.getPeople()
+            .awaitResponse()
+            .body()
+            ?.results
+            ?: listOf()
+    }
+
+    suspend fun loadStarships(): List<Starship> {
+        val service = retrofit.create(StarshipsClient::class.java)
+        return service.getStarships()
+            .awaitResponse()
+            .body()
+            ?.results
+            ?: listOf()
+    }
+
     suspend fun getFilms(urls: List<String>): List<Film> {
         val service = retrofit.create(FilmsClient::class.java)
         val films = mutableListOf<Film>()
@@ -31,7 +49,7 @@ class MainRepo(private val retrofit: Retrofit) {
         return films
     }
 
-    suspend fun getCharacters(urls: List<String>): List<Person> {
+    suspend fun getPeople(urls: List<String>): List<Person> {
         val service = retrofit.create(PeopleClient::class.java)
         val people = mutableListOf<Person>()
         for (url in urls) {
