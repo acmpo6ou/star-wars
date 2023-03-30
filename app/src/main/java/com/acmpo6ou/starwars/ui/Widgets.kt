@@ -6,6 +6,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -56,5 +59,19 @@ fun SearchField(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth(),
+        leadingIcon = {
+            Icon(
+                Icons.Default.Search,
+                contentDescription = null,
+            )
+        },
+        trailingIcon = {
+            IconButton(onClick = { searchText.value = "" }) {
+                Icon(
+                    Icons.Default.Clear,
+                    contentDescription = stringResource(R.string.clear),
+                )
+            }
+        },
     )
 }

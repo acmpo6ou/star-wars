@@ -34,6 +34,7 @@ class StarshipListFragment : Fragment() {
                 StarWarsTheme {
                     StarshipListScreen(
                         viewModel.starshipList,
+                        viewModel.searchText,
                         viewModel.favoriteStarshipUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,

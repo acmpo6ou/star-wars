@@ -34,6 +34,7 @@ class PeopleListFragment : Fragment() {
                 StarWarsTheme {
                     PeopleListScreen(
                         viewModel.peopleList,
+                        viewModel.searchText,
                         viewModel.favoritePeopleUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,

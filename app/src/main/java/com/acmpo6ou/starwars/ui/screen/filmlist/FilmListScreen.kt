@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -34,13 +35,16 @@ fun FilmListScreen(
     navigate: (film: Film) -> Unit,
 ) {
     val films = remember { filmList }
+    val text = searchText.observeAsState()
     // TODO: show loading when there are no films
-    LazyColumn() {
-        item {
-            SearchField(searchText)
-        }
-        items(items = films, key = { film: Film -> film.episodeId }) {
-            FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
+    Column {
+        SearchField(searchText)
+        LazyColumn() {
+            items(items = films, key = { film: Film -> film.episodeId }) {
+                if (text.value.toString().lowercase() in it.title.lowercase()) {
+                    FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
+                }
+            }
         }
     }
 }
