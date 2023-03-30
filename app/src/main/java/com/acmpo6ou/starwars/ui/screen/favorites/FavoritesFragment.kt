@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
-import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
+import com.google.accompanist.themeadapter.appcompat.AppCompatTheme
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -31,7 +31,7 @@ class FavoritesFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                StarWarsTheme {
+                AppCompatTheme {
                     FavoritesScreen(
                         viewModel,
                         {

@@ -14,7 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.Film
-import com.acmpo6ou.starwars.ui.theme.StarWarsTheme
+import com.google.accompanist.themeadapter.appcompat.AppCompatTheme
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -36,7 +36,7 @@ class FilmInfoFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                StarWarsTheme {
+                AppCompatTheme {
                     val film = remember { Json.decodeFromString<Film>(args.json) }
                     FilmInfoScreen(
                         film,

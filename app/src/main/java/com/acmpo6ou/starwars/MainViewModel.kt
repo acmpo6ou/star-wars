@@ -57,11 +57,13 @@ class MainViewModel : ViewModel() {
         urls: List<String>,
         getter: KSuspendFunction1<List<String>, List<T>>,
     ) {
+        loading.value = true
         viewModelScope.launch(Dispatchers.Default) {
             val items = getter(urls)
             viewModelScope.launch(Dispatchers.Main) {
                 list.clear()
                 list.addAll(items)
+                loading.value = false
             }
         }
     }
