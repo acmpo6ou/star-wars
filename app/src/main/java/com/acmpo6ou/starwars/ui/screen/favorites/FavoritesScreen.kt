@@ -1,11 +1,16 @@
 package com.acmpo6ou.starwars.ui.screen.favorites
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.acmpo6ou.starwars.MainViewModel
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.Film
@@ -28,7 +33,14 @@ fun FavoritesScreen(
     val starships = remember { viewModel.favoriteStarships }
     LazyColumn {
         if (films.size > 0) {
-            item { Text(stringResource(R.string.favorite_films)) }
+            item {
+                Text(
+                    text = stringResource(R.string.favorite_films),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(start = 8.dp),
+                )
+            }
         }
         items(items = films, key = { film: Film -> film.episodeId }) {
             FilmItem(
@@ -41,7 +53,14 @@ fun FavoritesScreen(
         }
 
         if (people.size > 0) {
-            item { Text(stringResource(R.string.favorite_people)) }
+            item {
+                Text(
+                    text = stringResource(R.string.favorite_people),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(start = 8.dp),
+                )
+            }
         }
         items(items = people, key = { person: Person -> person.name }) {
             PersonItem(
@@ -54,7 +73,14 @@ fun FavoritesScreen(
         }
 
         if (starships.size > 0) {
-            item { Text(stringResource(R.string.favorite_starships)) }
+            item {
+                Text(
+                    text = stringResource(R.string.favorite_starships),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(start = 8.dp),
+                )
+            }
         }
         items(items = starships, key = { starship: Starship -> starship.name }) {
             StarshipItem(
