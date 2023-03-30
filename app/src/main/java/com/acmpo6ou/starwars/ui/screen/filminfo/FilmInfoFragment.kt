@@ -38,7 +38,7 @@ class FilmInfoFragment : Fragment() {
                         viewModel.filmsList[args.filmIndex]
                     }
                     FilmInfoScreen(
-                        film, viewModel.favoriteFilms,
+                        film, viewModel.favoriteFilmUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
                         {

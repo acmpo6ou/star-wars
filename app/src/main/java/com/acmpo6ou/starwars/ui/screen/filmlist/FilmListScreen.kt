@@ -60,7 +60,7 @@ fun FilmItem(
         ) {
             Row {
                 Text(
-                    text = film.title,
+                    text = film.url,
                     // TODO: why doesn't it work?
                     fontWeight = FontWeight.Bold,
                 )

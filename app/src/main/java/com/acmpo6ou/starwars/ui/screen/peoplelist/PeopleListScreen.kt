@@ -63,7 +63,7 @@ fun PersonItem(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FavoriteButton(
-                    person.name, FavoritesRepo.FAVORITE_PEOPLE,
+                    person.url, FavoritesRepo.FAVORITE_PEOPLE,
                     favorites, addFavorite, removeFavorite,
                 )
             }

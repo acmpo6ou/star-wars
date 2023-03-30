@@ -16,6 +16,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.acmpo6ou.starwars.model.FavoritesRepo
+import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITES
 import com.acmpo6ou.starwars.model.MainRepo
 import com.google.android.material.navigation.NavigationView
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             )
             .build()
         val mainRepo = MainRepo(retrofit)
-        val prefs = getSharedPreferences("favorites", MODE_PRIVATE)
+        val prefs = getSharedPreferences(FAVORITES, MODE_PRIVATE)
         val favoritesRepo = FavoritesRepo(prefs)
         viewModel.initialize(mainRepo, favoritesRepo)
     }

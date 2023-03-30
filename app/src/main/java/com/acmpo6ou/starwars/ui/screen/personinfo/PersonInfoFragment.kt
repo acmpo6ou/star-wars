@@ -37,7 +37,7 @@ class PersonInfoFragment : Fragment() {
                         viewModel.peopleList[args.personIndex]
                     }
                     PersonInfoScreen(
-                        person, viewModel.favoritePeople,
+                        person, viewModel.favoritePeopleUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
                         {

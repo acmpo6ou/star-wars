@@ -38,7 +38,7 @@ class StarshipInfoFragment : Fragment() {
                         viewModel.starshipList[args.starshipIndex]
                     }
                     StarshipInfoScreen(
-                        starship, viewModel.favoriteStarships,
+                        starship, viewModel.favoriteStarshipUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
                         {

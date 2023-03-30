@@ -41,7 +41,7 @@ fun FilmInfoScreen(
             )
             Spacer(modifier = Modifier.weight(1f))
             FavoriteButton(
-                film.title, FavoritesRepo.FAVORITE_FILMS,
+                film.url, FavoritesRepo.FAVORITE_FILMS,
                 favorites, addFavorite, removeFavorite,
             )
         }

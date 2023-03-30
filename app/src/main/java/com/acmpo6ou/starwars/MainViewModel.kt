@@ -1,6 +1,7 @@
 package com.acmpo6ou.starwars
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.acmpo6ou.starwars.model.*
@@ -9,6 +10,7 @@ import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITE_PEOPLE
 import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITE_STARSHIPS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.reflect.KSuspendFunction1
 
 class MainViewModel : ViewModel() {
     private lateinit var mainRepo: MainRepo
@@ -18,38 +20,62 @@ class MainViewModel : ViewModel() {
     val peopleList = mutableStateListOf<Person>()
     val starshipList = mutableStateListOf<Starship>()
 
-    val favoriteFilms = mutableStateListOf<String>()
-    val favoritePeople = mutableStateListOf<String>()
-    val favoriteStarships = mutableStateListOf<String>()
+    val favoriteFilmUrls = mutableStateListOf<String>()
+    val favoritePeopleUrls = mutableStateListOf<String>()
+    val favoriteStarshipUrls = mutableStateListOf<String>()
 
-    private val favorites = mapOf(
-        FAVORITE_FILMS to favoriteFilms,
-        FAVORITE_PEOPLE to favoritePeople,
-        FAVORITE_STARSHIPS to favoriteStarships,
+    val favoriteFilms = mutableStateListOf<Film>()
+    val favoritePeople = mutableStateListOf<Person>()
+    val favoriteStarships = mutableStateListOf<Starship>()
+
+    private val favoriteUrls = mapOf(
+        FAVORITE_FILMS to favoriteFilmUrls,
+        FAVORITE_PEOPLE to favoritePeopleUrls,
+        FAVORITE_STARSHIPS to favoriteStarshipUrls,
     )
 
     fun initialize(mainRepo: MainRepo, favoritesRepo: FavoritesRepo) {
         this.mainRepo = mainRepo
         this.favoritesRepo = favoritesRepo
         loadFilms()
-        loadFavorites()
+        loadFavoriteUrls()
     }
 
-    private fun loadFavorites() {
-        for ((key, list) in favorites) {
-            list.clear()
-            list.addAll(favoritesRepo.getFavorites(key))
+    private fun <T> getFavorites(
+        list: SnapshotStateList<T>,
+        urls: List<String>,
+        getter: KSuspendFunction1<List<String>, List<T>>,
+    ) {
+        viewModelScope.launch(Dispatchers.Default) {
+            val items = getter(urls)
+            viewModelScope.launch(Dispatchers.Main) {
+                list.clear()
+                list.addAll(items)
+            }
         }
     }
 
+    private fun loadFavoriteUrls() {
+        for ((key, list) in favoriteUrls) {
+            list.clear()
+            list.addAll(favoritesRepo.getFavoriteUrls(key))
+        }
+    }
+
+    fun loadFavorites() {
+        getFavorites(favoriteFilms, favoriteFilmUrls, mainRepo::getFilms)
+        getFavorites(favoritePeople, favoritePeopleUrls, mainRepo::getCharacters)
+        getFavorites(favoriteStarships, favoriteStarshipUrls, mainRepo::getStarships)
+    }
+
     fun addFavorite(key: String, value: String) {
-        favorites[key]?.add(value)
-        favoritesRepo.saveFavorites(key, favorites[key] ?: listOf())
+        favoriteUrls[key]?.add(value)
+        favoritesRepo.saveFavoriteUrls(key, favoriteUrls[key] ?: listOf())
     }
 
     fun removeFavorite(key: String, value: String) {
-        favorites[key]?.remove(value)
-        favoritesRepo.saveFavorites(key, favorites[key] ?: listOf())
+        favoriteUrls[key]?.remove(value)
+        favoritesRepo.saveFavoriteUrls(key, favoriteUrls[key] ?: listOf())
     }
 
     private fun loadFilms() {
@@ -64,7 +90,7 @@ class MainViewModel : ViewModel() {
 
     fun loadFilms(urls: List<String>) {
         viewModelScope.launch(Dispatchers.Default) {
-            val films = mainRepo.loadFilms(urls)
+            val films = mainRepo.getFilms(urls)
             viewModelScope.launch(Dispatchers.Main) {
                 filmsList.clear()
                 filmsList.addAll(films)
@@ -74,7 +100,7 @@ class MainViewModel : ViewModel() {
 
     fun loadCharacters(urls: List<String>) {
         viewModelScope.launch(Dispatchers.Default) {
-            val characters = mainRepo.loadCharacters(urls)
+            val characters = mainRepo.getCharacters(urls)
             viewModelScope.launch(Dispatchers.Main) {
                 peopleList.clear()
                 peopleList.addAll(characters)
@@ -84,7 +110,7 @@ class MainViewModel : ViewModel() {
 
     fun loadStarships(urls: List<String>) {
         viewModelScope.launch(Dispatchers.Default) {
-            val starships = mainRepo.loadStarships(urls)
+            val starships = mainRepo.getStarships(urls)
             viewModelScope.launch(Dispatchers.Main) {
                 starshipList.clear()
                 starshipList.addAll(starships)

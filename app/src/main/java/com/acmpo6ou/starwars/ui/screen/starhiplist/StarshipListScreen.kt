@@ -63,7 +63,7 @@ fun FilmItem(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FavoriteButton(
-                    starship.name, FavoritesRepo.FAVORITE_STARSHIPS,
+                    starship.url, FavoritesRepo.FAVORITE_STARSHIPS,
                     favorites, addFavorite, removeFavorite,
                 )
             }
