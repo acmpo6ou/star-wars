@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -29,20 +31,30 @@ import com.acmpo6ou.starwars.ui.SearchField
 fun FilmListScreen(
     filmList: SnapshotStateList<Film>,
     searchText: MutableLiveData<String>,
+    loading: MutableLiveData<Boolean>,
     favorites: SnapshotStateList<String>,
     addFavorite: (key: String, title: String) -> Unit,
     removeFavorite: (key: String, title: String) -> Unit,
     navigate: (film: Film) -> Unit,
 ) {
     val films = remember { filmList }
-    val text = searchText.observeAsState()
-    // TODO: show loading when there are no films
+    val text by searchText.observeAsState()
+    val isLoading by loading.observeAsState()
     Column {
         SearchField(searchText)
-        LazyColumn() {
-            items(items = films, key = { film: Film -> film.episodeId }) {
-                if (text.value.toString().lowercase() in it.title.lowercase()) {
-                    FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
+        if (isLoading == true) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            LazyColumn() {
+                items(items = films, key = { film: Film -> film.episodeId }) {
+                    if (text.toString().lowercase() in it.title.lowercase()) {
+                        FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
+                    }
                 }
             }
         }

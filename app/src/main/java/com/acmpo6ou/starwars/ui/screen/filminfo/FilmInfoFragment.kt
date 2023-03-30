@@ -44,7 +44,7 @@ class FilmInfoFragment : Fragment() {
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
                         {
-                            viewModel.loadCharacters(it)
+                            viewModel.loadPeople(it)
                             navController?.popBackStack(R.id.nav_graph, true)
                             navController?.navigate(R.id.peopleListFragment)
                         },

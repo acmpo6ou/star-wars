@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -26,6 +27,7 @@ import com.acmpo6ou.starwars.ui.SearchField
 fun PeopleListScreen(
     peopleList: SnapshotStateList<Person>,
     searchText: MutableLiveData<String>,
+    loading: MutableLiveData<Boolean>,
     favorites: SnapshotStateList<String>,
     addFavorite: (key: String, title: String) -> Unit,
     removeFavorite: (key: String, title: String) -> Unit,
@@ -33,13 +35,22 @@ fun PeopleListScreen(
 ) {
     val people = remember { peopleList }
     val text = searchText.observeAsState()
-    // TODO: show loading when there are no films
+    val isLoading = loading.observeAsState()
     Column {
         SearchField(searchText)
-        LazyColumn {
-            items(items = people, key = { person: Person -> person.name }) {
-                if (text.value.toString().lowercase() in it.name.lowercase()) {
-                    PersonItem(it, favorites, addFavorite, removeFavorite, navigate)
+        if (isLoading.value == true) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            LazyColumn {
+                items(items = people, key = { person: Person -> person.name }) {
+                    if (text.value.toString().lowercase() in it.name.lowercase()) {
+                        PersonItem(it, favorites, addFavorite, removeFavorite, navigate)
+                    }
                 }
             }
         }

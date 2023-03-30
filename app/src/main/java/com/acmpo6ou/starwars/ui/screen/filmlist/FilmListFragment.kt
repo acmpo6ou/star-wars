@@ -35,6 +35,7 @@ class FilmListFragment : Fragment() {
                     FilmListScreen(
                         viewModel.filmsList,
                         viewModel.searchText,
+                        viewModel.loading,
                         viewModel.favoriteFilmUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,

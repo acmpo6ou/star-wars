@@ -11,12 +11,15 @@ import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITE_PEOPLE
 import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITE_STARSHIPS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.reflect.KSuspendFunction0
 import kotlin.reflect.KSuspendFunction1
 
 class MainViewModel : ViewModel() {
     private lateinit var mainRepo: MainRepo
     private lateinit var favoritesRepo: FavoritesRepo
-    val searchText = MutableLiveData<String>("")
+
+    val searchText = MutableLiveData("")
+    val loading = MutableLiveData(true)
 
     val filmsList = mutableStateListOf<Film>()
     val peopleList = mutableStateListOf<Person>()
@@ -48,7 +51,7 @@ class MainViewModel : ViewModel() {
         loadFavoriteUrls()
     }
 
-    private fun <T> getFavorites(
+    private fun <T> getItems(
         list: SnapshotStateList<T>,
         urls: List<String>,
         getter: KSuspendFunction1<List<String>, List<T>>,
@@ -70,9 +73,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun loadFavorites() {
-        getFavorites(favoriteFilms, favoriteFilmUrls, mainRepo::getFilms)
-        getFavorites(favoritePeople, favoritePeopleUrls, mainRepo::getPeople)
-        getFavorites(favoriteStarships, favoriteStarshipUrls, mainRepo::getStarships)
+        getItems(favoriteFilms, favoriteFilmUrls, mainRepo::getFilms)
+        getItems(favoritePeople, favoritePeopleUrls, mainRepo::getPeople)
+        getItems(favoriteStarships, favoriteStarshipUrls, mainRepo::getStarships)
     }
 
     fun addFavorite(key: String, value: String) {
@@ -88,63 +91,26 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun loadFilms() {
+    private fun <T> loadItems(
+        list: SnapshotStateList<T>,
+        loader: KSuspendFunction0<List<T>>,
+    ) {
+        loading.value = true
         viewModelScope.launch(Dispatchers.Default) {
-            val films = mainRepo.loadFilms()
+            val items = loader()
             viewModelScope.launch(Dispatchers.Main) {
-                filmsList.clear()
-                filmsList.addAll(films)
+                list.clear()
+                list.addAll(items)
+                loading.value = false
             }
         }
     }
 
-    fun loadPeople() {
-        viewModelScope.launch(Dispatchers.Default) {
-            val people = mainRepo.loadPeople()
-            viewModelScope.launch(Dispatchers.Main) {
-                peopleList.clear()
-                peopleList.addAll(people)
-            }
-        }
-    }
+    fun loadFilms() = loadItems(filmsList, mainRepo::loadFilms)
+    fun loadPeople() = loadItems(peopleList, mainRepo::loadPeople)
+    fun loadStarships() = loadItems(starshipList, mainRepo::loadStarships)
 
-    fun loadStarships() {
-        viewModelScope.launch(Dispatchers.Default) {
-            val starships = mainRepo.loadStarships()
-            viewModelScope.launch(Dispatchers.Main) {
-                starshipList.clear()
-                starshipList.addAll(starships)
-            }
-        }
-    }
-
-    fun loadFilms(urls: List<String>) {
-        viewModelScope.launch(Dispatchers.Default) {
-            val films = mainRepo.getFilms(urls)
-            viewModelScope.launch(Dispatchers.Main) {
-                filmsList.clear()
-                filmsList.addAll(films)
-            }
-        }
-    }
-
-    fun loadCharacters(urls: List<String>) {
-        viewModelScope.launch(Dispatchers.Default) {
-            val characters = mainRepo.getPeople(urls)
-            viewModelScope.launch(Dispatchers.Main) {
-                peopleList.clear()
-                peopleList.addAll(characters)
-            }
-        }
-    }
-
-    fun loadStarships(urls: List<String>) {
-        viewModelScope.launch(Dispatchers.Default) {
-            val starships = mainRepo.getStarships(urls)
-            viewModelScope.launch(Dispatchers.Main) {
-                starshipList.clear()
-                starshipList.addAll(starships)
-            }
-        }
-    }
+    fun loadFilms(urls: List<String>) = getItems(filmsList, urls, mainRepo::getFilms)
+    fun loadPeople(urls: List<String>) = getItems(peopleList, urls, mainRepo::getPeople)
+    fun loadStarships(urls: List<String>) = getItems(starshipList, urls, mainRepo::getStarships)
 }

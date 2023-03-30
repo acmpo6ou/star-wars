@@ -35,6 +35,7 @@ class PeopleListFragment : Fragment() {
                     PeopleListScreen(
                         viewModel.peopleList,
                         viewModel.searchText,
+                        viewModel.loading,
                         viewModel.favoritePeopleUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,

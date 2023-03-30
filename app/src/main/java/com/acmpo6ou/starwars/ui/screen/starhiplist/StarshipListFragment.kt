@@ -35,6 +35,7 @@ class StarshipListFragment : Fragment() {
                     StarshipListScreen(
                         viewModel.starshipList,
                         viewModel.searchText,
+                        viewModel.loading,
                         viewModel.favoriteStarshipUrls,
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
