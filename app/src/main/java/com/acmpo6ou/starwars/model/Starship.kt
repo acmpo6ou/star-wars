@@ -11,9 +11,7 @@ data class Starship(
     val consumables: String = "",
     @SerialName("cost_in_credits")
     val costInCredits: String = "",
-    val created: String = "",
     val crew: String = "",
-    val edited: String = "",
     @SerialName("hyperdrive_rating")
     val hyperdriveRating: String = "",
     val length: String = "",

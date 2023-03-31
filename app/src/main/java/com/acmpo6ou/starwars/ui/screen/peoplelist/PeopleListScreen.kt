@@ -89,7 +89,7 @@ fun PersonItem(
                 )
             }
 
-            Text(stringResource(R.string.birth_date, person.birthYear))
+            Text(stringResource(R.string.birth_year, person.birthYear))
             Text(stringResource(R.string.gender, person.gender))
             Text(stringResource(R.string.skin_color, person.skinColor))
         }

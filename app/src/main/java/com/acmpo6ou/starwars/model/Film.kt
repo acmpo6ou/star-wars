@@ -16,8 +16,6 @@ data class Film(
     val starships: List<String> = listOf(),
     val director: String = "",
     val producer: String = "",
-    val created: String = "",
-    val edited: String = "",
     override val url: String = "",
 ) : Item
 

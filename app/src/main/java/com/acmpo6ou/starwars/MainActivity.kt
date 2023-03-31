@@ -16,7 +16,7 @@ import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
-    lateinit var retrofit: Retrofit
+    private lateinit var retrofit: Retrofit
 
     @Suppress("JSON_FORMAT_REDUNDANT")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                 }.asConverterFactory(contentType),
             )
             .build()
+
         val mainRepo = MainRepo(retrofit)
         val prefs = getSharedPreferences(FAVORITES, MODE_PRIVATE)
         val favoritesRepo = FavoritesRepo(prefs)

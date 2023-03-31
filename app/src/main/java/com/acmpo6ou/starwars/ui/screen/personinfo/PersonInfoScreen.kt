@@ -43,14 +43,13 @@ fun PersonInfoScreen(
             )
         }
 
-        Text(stringResource(R.string.birth_date, person.birthYear))
+        Text(stringResource(R.string.birth_year, person.birthYear))
         Text(stringResource(R.string.gender, person.gender))
         Text(stringResource(R.string.skin_color, person.skinColor))
         Text(stringResource(R.string.eye_color, person.eyeColor))
         Text(stringResource(R.string.hair_color, person.hairColor))
         Text(stringResource(R.string.mass, person.mass))
         Text(stringResource(R.string.height, person.height))
-        Text(stringResource(R.string.home_world, person.homeworld))
 
         if (person.films.isNotEmpty()) {
             Text(
