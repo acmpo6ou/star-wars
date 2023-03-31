@@ -37,6 +37,7 @@ fun PeopleListScreen(
     val people = remember { peopleList }
     val text = searchText.observeAsState()
     val isLoading = loading.observeAsState()
+
     Column {
         SearchField(searchText)
         if (isLoading.value == true) {
@@ -80,7 +81,6 @@ fun PersonItem(
             Row {
                 Text(
                     text = person.name,
-                    // TODO: why doesn't it work?
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.weight(1f))

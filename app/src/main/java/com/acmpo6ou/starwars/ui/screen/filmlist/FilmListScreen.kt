@@ -41,6 +41,7 @@ fun FilmListScreen(
     val films = remember { filmList }
     val text by searchText.observeAsState()
     val isLoading by loading.observeAsState()
+
     Column {
         SearchField(searchText)
         if (isLoading == true) {
@@ -51,7 +52,7 @@ fun FilmListScreen(
                 CircularProgressIndicator(color = MaterialTheme.colors.onBackground)
             }
         } else {
-            LazyColumn() {
+            LazyColumn {
                 items(items = films, key = { film: Film -> film.episodeId }) {
                     if (text.toString().lowercase() in it.title.lowercase()) {
                         FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
@@ -84,7 +85,6 @@ fun FilmItem(
             Row {
                 Text(
                     text = film.title,
-                    // TODO: why doesn't it work?
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.weight(1f))

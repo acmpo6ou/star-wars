@@ -9,6 +9,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -35,11 +36,12 @@ fun StarshipListScreen(
     navigate: (starship: Starship) -> Unit,
 ) {
     val starships = remember { starshipList }
-    val text = searchText.observeAsState()
-    val isLoading = loading.observeAsState()
+    val text by searchText.observeAsState()
+    val isLoading by loading.observeAsState()
+
     Column {
         SearchField(searchText)
-        if (isLoading.value == true) {
+        if (isLoading == true) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
@@ -47,9 +49,9 @@ fun StarshipListScreen(
                 CircularProgressIndicator(color = MaterialTheme.colors.onBackground)
             }
         } else {
-            LazyColumn() {
+            LazyColumn {
                 items(items = starships, key = { starship: Starship -> starship.name }) {
-                    if (text.value.toString().lowercase() in it.name.lowercase()) {
+                    if (text.toString().lowercase() in it.name.lowercase()) {
                         StarshipItem(it, favorites, addFavorite, removeFavorite, navigate)
                     }
                 }
@@ -80,7 +82,6 @@ fun StarshipItem(
             Row {
                 Text(
                     text = starship.name,
-                    // TODO: why doesn't it work?
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.weight(1f))
