@@ -38,8 +38,9 @@ fun FavoritesScreen(
     val films = remember { viewModel.favoriteFilms }
     val people = remember { viewModel.favoritePeople }
     val starships = remember { viewModel.favoriteStarships }
-    val text = viewModel.searchText.observeAsState()
+    val text by viewModel.searchText.observeAsState()
     val isLoading by viewModel.loading.observeAsState()
+
     Column {
         SearchField(viewModel.searchText)
         if (isLoading == true) {
@@ -52,7 +53,8 @@ fun FavoritesScreen(
             return@Column
         }
         LazyColumn {
-            if (films.size > 0 && text.value.isNullOrEmpty()) {
+            // hide the header if there are no items or during search
+            if (films.size > 0 && text.isNullOrEmpty()) {
                 item {
                     Text(
                         text = stringResource(R.string.favorite_films),
@@ -63,7 +65,7 @@ fun FavoritesScreen(
                 }
             }
             items(items = films, key = { film: Film -> film.episodeId }) {
-                if (text.value.toString().lowercase() in it.title.lowercase()) {
+                if (text.toString().lowercase() in it.title.lowercase()) {
                     FilmItem(
                         it,
                         viewModel.favoriteFilmUrls,
@@ -74,7 +76,8 @@ fun FavoritesScreen(
                 }
             }
 
-            if (people.size > 0 && text.value.isNullOrEmpty()) {
+            // hide the header if there are no items or during search
+            if (people.size > 0 && text.isNullOrEmpty()) {
                 item {
                     Text(
                         text = stringResource(R.string.favorite_people),
@@ -85,7 +88,7 @@ fun FavoritesScreen(
                 }
             }
             items(items = people, key = { person: Person -> person.name }) {
-                if (text.value.toString().lowercase() in it.name.lowercase()) {
+                if (text.toString().lowercase() in it.name.lowercase()) {
                     PersonItem(
                         it,
                         viewModel.favoritePeopleUrls,
@@ -96,7 +99,8 @@ fun FavoritesScreen(
                 }
             }
 
-            if (starships.size > 0 && text.value.isNullOrEmpty()) {
+            // hide the header if there are no items or during search
+            if (starships.size > 0 && text.isNullOrEmpty()) {
                 item {
                     Text(
                         text = stringResource(R.string.favorite_starships),
@@ -107,7 +111,7 @@ fun FavoritesScreen(
                 }
             }
             items(items = starships, key = { starship: Starship -> starship.name }) {
-                if (text.value.toString().lowercase() in it.name.lowercase()) {
+                if (text.toString().lowercase() in it.name.lowercase()) {
                     StarshipItem(
                         it,
                         viewModel.favoriteStarshipUrls,
