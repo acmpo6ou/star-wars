@@ -20,24 +20,25 @@ import com.acmpo6ou.starwars.R
 
 @Composable
 fun FavoriteButton(
-    item: String,
+    itemName: String,
+    url: String,
     key: String,
     favorites: SnapshotStateList<String>,
     addFavorite: (key: String, title: String) -> Unit,
     removeFavorite: (key: String, title: String) -> Unit,
 ) {
-    if (item in favorites) {
-        IconButton(onClick = { removeFavorite(key, item) }) {
+    if (url in favorites) {
+        IconButton(onClick = { removeFavorite(key, url) }) {
             Icon(
                 painterResource(R.drawable.favorite),
-                stringResource(R.string.remove_favorite, item),
+                stringResource(R.string.remove_favorite, itemName),
             )
         }
     } else {
-        IconButton(onClick = { addFavorite(key, item) }) {
+        IconButton(onClick = { addFavorite(key, url) }) {
             Icon(
                 painterResource(R.drawable.favorite_border),
-                stringResource(R.string.add_favorite, item),
+                stringResource(R.string.add_favorite, itemName),
             )
         }
     }
