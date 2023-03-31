@@ -36,14 +36,31 @@ fun FavoritesScreen(
     navigatePerson: (person: Person) -> Unit,
     navigateStarship: (starship: Starship) -> Unit,
 ) {
-    val films = remember { viewModel.favoriteFilms }
-    val people = remember { viewModel.favoritePeople }
-    val starships = remember { viewModel.favoriteStarships }
     val text by viewModel.searchText.observeAsState()
     val isLoading by viewModel.loading.observeAsState()
+    val films = remember(text) {
+        viewModel.favoriteFilms.filter { text.toString().lowercase() in it.title.lowercase() }
+    }
+    val people = remember(text) {
+        viewModel.favoritePeople.filter { text.toString().lowercase() in it.name.lowercase() }
+    }
+    val starships = remember(text) {
+        viewModel.favoriteStarships.filter { text.toString().lowercase() in it.name.lowercase() }
+    }
 
     Column {
         SearchField(viewModel.searchText)
+        if (films.size + people.size + starships.size == 0) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = stringResource(R.string.no_items),
+                    fontSize = 20.sp,
+                )
+            }
+        }
         if (isLoading == true) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -54,8 +71,7 @@ fun FavoritesScreen(
             return@Column
         }
         LazyColumn {
-            // hide the header if there are no items or during search
-            if (films.size > 0 && text.isNullOrEmpty()) {
+            if (films.isNotEmpty()) {
                 item {
                     Text(
                         text = stringResource(R.string.favorite_films),
@@ -66,19 +82,16 @@ fun FavoritesScreen(
                 }
             }
             items(items = films, key = { film: Film -> film.episodeId }) {
-                if (text.toString().lowercase() in it.title.lowercase()) {
-                    FilmItem(
-                        it,
-                        viewModel.favoriteFilmUrls,
-                        viewModel::addFavorite,
-                        viewModel::removeFavorite,
-                        navigateFilm,
-                    )
-                }
+                FilmItem(
+                    it,
+                    viewModel.favoriteFilmUrls,
+                    viewModel::addFavorite,
+                    viewModel::removeFavorite,
+                    navigateFilm,
+                )
             }
 
-            // hide the header if there are no items or during search
-            if (people.size > 0 && text.isNullOrEmpty()) {
+            if (people.isNotEmpty()) {
                 item {
                     Text(
                         text = stringResource(R.string.favorite_people),
@@ -89,19 +102,16 @@ fun FavoritesScreen(
                 }
             }
             items(items = people, key = { person: Person -> person.name }) {
-                if (text.toString().lowercase() in it.name.lowercase()) {
-                    PersonItem(
-                        it,
-                        viewModel.favoritePeopleUrls,
-                        viewModel::addFavorite,
-                        viewModel::removeFavorite,
-                        navigatePerson,
-                    )
-                }
+                PersonItem(
+                    it,
+                    viewModel.favoritePeopleUrls,
+                    viewModel::addFavorite,
+                    viewModel::removeFavorite,
+                    navigatePerson,
+                )
             }
 
-            // hide the header if there are no items or during search
-            if (starships.size > 0 && text.isNullOrEmpty()) {
+            if (starships.isNotEmpty()) {
                 item {
                     Text(
                         text = stringResource(R.string.favorite_starships),
@@ -112,15 +122,13 @@ fun FavoritesScreen(
                 }
             }
             items(items = starships, key = { starship: Starship -> starship.name }) {
-                if (text.toString().lowercase() in it.name.lowercase()) {
-                    StarshipItem(
-                        it,
-                        viewModel.favoriteStarshipUrls,
-                        viewModel::addFavorite,
-                        viewModel::removeFavorite,
-                        navigateStarship,
-                    )
-                }
+                StarshipItem(
+                    it,
+                    viewModel.favoriteStarshipUrls,
+                    viewModel::addFavorite,
+                    viewModel::removeFavorite,
+                    navigateStarship,
+                )
             }
         }
     }
