@@ -44,11 +44,13 @@ class FilmInfoFragment : Fragment() {
                         viewModel::addFavorite,
                         viewModel::removeFavorite,
                         {
+                            viewModel.searchText.value = ""
                             viewModel.loadPeople(it)
                             navController?.popBackStack(R.id.nav_graph, true)
                             navController?.navigate(R.id.peopleListFragment)
                         },
                         {
+                            viewModel.searchText.value = ""
                             viewModel.loadStarships(it)
                             navController?.popBackStack(R.id.nav_graph, true)
                             navController?.navigate(R.id.starshipListFragment)
