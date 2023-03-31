@@ -3,13 +3,24 @@ package com.acmpo6ou.starwars.model
 import android.content.SharedPreferences
 
 class FavoritesRepo(private val prefs: SharedPreferences) {
+
+    /**
+     * Using shared preferences, loads urls of items added to favorites.
+     *
+     * @param key the key for the items (e.g. FAVORITE_FILMS to load favorite films).
+     */
     fun getFavoriteUrls(key: String): List<String> {
         return prefs.getStringSet(key, setOf())?.toList() ?: listOf()
     }
 
-    fun saveFavoriteUrls(key: String, ids: List<String>) {
+    /**
+     * Saves [urls] to shared preferences.
+     *
+     * @param key the key for the items (e.g. FAVORITE_FILMS to save favorite films).
+     */
+    fun saveFavoriteUrls(key: String, urls: List<String>) {
         prefs.edit()
-            .putStringSet(key, ids.toSet())
+            .putStringSet(key, urls.toSet())
             .apply()
     }
 
