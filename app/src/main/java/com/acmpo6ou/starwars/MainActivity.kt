@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             R.id.peopleListFragment -> viewModel.loadPeople()
             R.id.starshipListFragment -> viewModel.loadStarships()
         }
+        viewModel.searchText.value = ""
         navController.navigate(item.itemId)
         return true
     }

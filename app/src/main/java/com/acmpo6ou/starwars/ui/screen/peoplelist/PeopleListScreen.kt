@@ -9,6 +9,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.FavoritesRepo
@@ -34,13 +36,26 @@ fun PeopleListScreen(
     removeFavorite: (key: String, title: String) -> Unit,
     navigate: (person: Person) -> Unit,
 ) {
-    val people = remember { peopleList }
-    val text = searchText.observeAsState()
-    val isLoading = loading.observeAsState()
+    val text by searchText.observeAsState()
+    val isLoading by loading.observeAsState()
+    val people = remember(text) {
+        peopleList.filter { text.toString().lowercase() in it.name.lowercase() }
+    }
 
     Column {
         SearchField(searchText)
-        if (isLoading.value == true) {
+        if (people.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = stringResource(R.string.no_items),
+                    fontSize = 20.sp,
+                )
+            }
+        }
+        if (isLoading == true) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
@@ -50,9 +65,7 @@ fun PeopleListScreen(
         } else {
             LazyColumn {
                 items(items = people, key = { person: Person -> person.name }) {
-                    if (text.value.toString().lowercase() in it.name.lowercase()) {
-                        PersonItem(it, favorites, addFavorite, removeFavorite, navigate)
-                    }
+                    PersonItem(it, favorites, addFavorite, removeFavorite, navigate)
                 }
             }
         }

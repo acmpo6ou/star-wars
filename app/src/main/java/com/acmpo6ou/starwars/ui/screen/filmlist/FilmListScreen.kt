@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITE_FILMS
@@ -38,12 +39,25 @@ fun FilmListScreen(
     removeFavorite: (key: String, title: String) -> Unit,
     navigate: (film: Film) -> Unit,
 ) {
-    val films = remember { filmList }
     val text by searchText.observeAsState()
     val isLoading by loading.observeAsState()
+    val films = remember(text) {
+        filmList.filter { text.toString().lowercase() in it.title.lowercase() }
+    }
 
     Column {
         SearchField(searchText)
+        if (films.isEmpty() && isLoading == false) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = stringResource(R.string.no_items),
+                    fontSize = 20.sp,
+                )
+            }
+        }
         if (isLoading == true) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -54,9 +68,7 @@ fun FilmListScreen(
         } else {
             LazyColumn {
                 items(items = films, key = { film: Film -> film.episodeId }) {
-                    if (text.toString().lowercase() in it.title.lowercase()) {
-                        FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
-                    }
+                    FilmItem(it, favorites, addFavorite, removeFavorite, navigate)
                 }
             }
         }

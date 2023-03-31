@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.MutableLiveData
 import com.acmpo6ou.starwars.R
 import com.acmpo6ou.starwars.model.FavoritesRepo
@@ -35,12 +36,25 @@ fun StarshipListScreen(
     removeFavorite: (key: String, title: String) -> Unit,
     navigate: (starship: Starship) -> Unit,
 ) {
-    val starships = remember { starshipList }
     val text by searchText.observeAsState()
     val isLoading by loading.observeAsState()
+    val starships = remember(text) {
+        starshipList.filter { text.toString().lowercase() in it.name.lowercase() }
+    }
 
     Column {
         SearchField(searchText)
+        if (starships.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = stringResource(R.string.no_items),
+                    fontSize = 20.sp,
+                )
+            }
+        }
         if (isLoading == true) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -51,9 +65,7 @@ fun StarshipListScreen(
         } else {
             LazyColumn {
                 items(items = starships, key = { starship: Starship -> starship.name }) {
-                    if (text.toString().lowercase() in it.name.lowercase()) {
-                        StarshipItem(it, favorites, addFavorite, removeFavorite, navigate)
-                    }
+                    StarshipItem(it, favorites, addFavorite, removeFavorite, navigate)
                 }
             }
         }
