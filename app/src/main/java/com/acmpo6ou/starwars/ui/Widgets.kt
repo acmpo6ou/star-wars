@@ -2,10 +2,7 @@ package com.acmpo6ou.starwars.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -74,5 +71,10 @@ fun SearchField(
                 )
             }
         },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = MaterialTheme.colors.onBackground,
+            focusedLabelColor = MaterialTheme.colors.onBackground,
+            cursorColor = MaterialTheme.colors.onBackground,
+        ),
     )
 }
