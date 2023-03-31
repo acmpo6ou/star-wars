@@ -52,6 +52,13 @@ class MainViewModel : ViewModel() {
         loadFilms()
     }
 
+    /**
+     * Asynchronously loads items from [urls] into [list].
+     *
+     * @param list a list to load items into.
+     * @param urls urls to load items from.
+     * @param getter a function taking [urls] and loading corresponding items.
+     */
     private fun <T> getItems(
         list: SnapshotStateList<T>,
         urls: List<String>,
@@ -68,6 +75,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Loads urls of items added to favorites.
+     */
     private fun loadFavoriteUrls() {
         for ((key, list) in favoriteUrls) {
             list.clear()
@@ -94,6 +104,12 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Asynchronously loads items returned by [loader] into [list].
+     *
+     * This is similar to [getItems], but [loader] is loading all items,
+     * instead of only items from specific urls.
+     */
     private fun <T> loadItems(
         list: SnapshotStateList<T>,
         loader: KSuspendFunction0<List<T>>,
