@@ -38,7 +38,7 @@ fun PersonInfoScreen(
             )
             Spacer(modifier = Modifier.weight(1f))
             FavoriteButton(
-                person.url, FavoritesRepo.FAVORITE_PEOPLE,
+                person.name, person.url, FavoritesRepo.FAVORITE_PEOPLE,
                 favorites, addFavorite, removeFavorite,
             )
         }

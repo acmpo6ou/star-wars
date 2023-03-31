@@ -89,6 +89,7 @@ fun FilmItem(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FavoriteButton(
+                    film.title,
                     film.url,
                     FAVORITE_FILMS,
                     favorites,

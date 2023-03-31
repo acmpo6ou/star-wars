@@ -1,14 +1,23 @@
 package com.acmpo6ou.starwars
 
+import android.content.Context.MODE_PRIVATE
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
+import com.acmpo6ou.starwars.model.FavoritesRepo.Companion.FAVORITES
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 
 class MainActivityTest {
     @get:Rule
     val compose = createAndroidComposeRule<MainActivity>()
+
+    @After
+    fun clearStorage() {
+        val prefs = compose.activity.getSharedPreferences(FAVORITES, MODE_PRIVATE)
+        prefs.edit().clear().apply()
+    }
 
     private fun navigate(id: Int) {
         val activity = compose.activity
@@ -34,6 +43,12 @@ class MainActivityTest {
 
         // go back to films
         navigate(R.id.filmListFragment)
+
+        // wait for them to load
+        compose.waitUntil(5_000) {
+            compose.onAllNodesWithTag("search_field")
+                .fetchSemanticsNodes().size == 1
+        }
 
         // search for "sith"
         compose.onNodeWithTag("search_field")
@@ -66,9 +81,17 @@ class MainActivityTest {
         compose.onNodeWithText("VIEW CHARACTERS")
             .performClick()
 
-        // search field should be empty
+        // search field should be empty, so it should contain the placeholder text "Search"
         compose.onNodeWithTag("search_field")
-            .assertTextEquals("")
+            .assertTextEquals("Search", "")
+
+        compose.onRoot().printToLog("mylog")
+
+        // wait for people to get loaded
+        compose.waitUntil(5_000) {
+            compose.onAllNodesWithContentDescription("Add Luke Skywalker to favorites")
+                .fetchSemanticsNodes().size == 1
+        }
 
         // favorite Luke Skywalker
         compose.onNodeWithContentDescription("Add Luke Skywalker to favorites")
@@ -103,6 +126,12 @@ class MainActivityTest {
         // view the starships
         compose.onNodeWithText("VIEW STARSHIPS")
             .performClick()
+
+        // wait for them to load
+        compose.waitUntil(5_000) {
+            compose.onAllNodesWithText("X-wing")
+                .fetchSemanticsNodes().size == 1
+        }
 
         // there should be "X-wing" and "Imperial shuttle"
         compose.onNodeWithText("X-wing")
@@ -154,6 +183,12 @@ class MainActivityTest {
         compose.onNodeWithText("VIEW FILMS")
             .performClick()
 
+        // wait for them to load
+        compose.waitUntil(5_000) {
+            compose.onAllNodesWithText("A New Hope")
+                .fetchSemanticsNodes().size == 1
+        }
+
         // there should be 3 films
         compose.onNodeWithText("A New Hope")
             .assertIsDisplayed()
@@ -165,24 +200,30 @@ class MainActivityTest {
         // go to favorites
         navigate(R.id.favoritesFragment)
 
+        // wait for them to load
+        compose.waitUntil(5_000) {
+            compose.onAllNodesWithText("Imperial shuttle")
+                .fetchSemanticsNodes().size == 1
+        }
+
         // there should be some favorites
         compose.onNodeWithText("Favorite films")
-            .assertIsDisplayed()
+            .assertExists()
         compose.onNodeWithText("Favorite people")
-            .assertIsDisplayed()
+            .assertExists()
         compose.onNodeWithText("Favorite starships")
-            .assertIsDisplayed()
+            .assertExists()
         compose.onNodeWithText("Revenge of the Sith")
-            .assertIsDisplayed()
+            .assertExists()
         compose.onNodeWithText("Luke Skywalker")
-            .assertIsDisplayed()
+            .assertExists()
         compose.onNodeWithText("Imperial shuttle")
-            .assertIsDisplayed()
+            .assertExists()
 
         // remove Luke Skywalker
         compose.onNodeWithContentDescription("Remove Luke Skywalker from favorites")
             .performClick()
         compose.onNodeWithText("Luke Skywalker")
-            .assertDoesNotExist()
+            .assertIsNotDisplayed()
     }
 }

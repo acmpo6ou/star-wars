@@ -86,7 +86,7 @@ fun StarshipItem(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FavoriteButton(
-                    starship.url, FavoritesRepo.FAVORITE_STARSHIPS,
+                    starship.name, starship.url, FavoritesRepo.FAVORITE_STARSHIPS,
                     favorites, addFavorite, removeFavorite,
                 )
             }
