@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
@@ -48,9 +49,9 @@ fun FavoriteButton(
 fun SearchField(
     searchText: MutableLiveData<String>,
 ) {
-    val text = searchText.observeAsState()
+    val text by searchText.observeAsState()
     OutlinedTextField(
-        value = text.value ?: "",
+        value = text ?: "",
         onValueChange = { value: String ->
             searchText.value = value
         },
