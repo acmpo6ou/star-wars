@@ -19,7 +19,6 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 class FilmInfoFragment : Fragment() {
-    // TODO: extract to a superclass
     private val viewModel: MainViewModel by activityViewModels()
     private val args: FilmInfoFragmentArgs by navArgs()
     private val navController: NavController?

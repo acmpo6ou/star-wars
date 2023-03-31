@@ -17,6 +17,7 @@ import retrofit2.Retrofit
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var retrofit: Retrofit
+    var menu: Menu? = null
 
     @Suppress("JSON_FORMAT_REDUNDANT")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+        this.menu = menu
         return super.onCreateOptionsMenu(menu)
     }
 

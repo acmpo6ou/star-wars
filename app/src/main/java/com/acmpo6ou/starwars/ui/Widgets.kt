@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -55,6 +56,7 @@ fun SearchField(
         label = { Text(stringResource(R.string.search)) },
         singleLine = true,
         modifier = Modifier
+            .testTag("search_field")
             .padding(8.dp)
             .fillMaxWidth(),
         leadingIcon = {
