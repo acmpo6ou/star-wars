@@ -38,14 +38,14 @@ fun FavoritesScreen(
 ) {
     val text by viewModel.searchText.observeAsState()
     val isLoading by viewModel.loading.observeAsState()
-    val films = remember(text) {
-        viewModel.favoriteFilms.filter { text.toString().lowercase() in it.title.lowercase() }
+    val films = viewModel.favoriteFilms.filter {
+        text.toString().lowercase() in it.title.lowercase()
     }
-    val people = remember(text) {
-        viewModel.favoritePeople.filter { text.toString().lowercase() in it.name.lowercase() }
+    val people = viewModel.favoritePeople.filter {
+        text.toString().lowercase() in it.name.lowercase()
     }
-    val starships = remember(text) {
-        viewModel.favoriteStarships.filter { text.toString().lowercase() in it.name.lowercase() }
+    val starships = viewModel.favoriteStarships.filter {
+        text.toString().lowercase() in it.name.lowercase()
     }
 
     Column {

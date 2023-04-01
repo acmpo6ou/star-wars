@@ -38,9 +38,7 @@ fun StarshipListScreen(
 ) {
     val text by searchText.observeAsState()
     val isLoading by loading.observeAsState()
-    val starships = remember(text) {
-        starshipList.filter { text.toString().lowercase() in it.name.lowercase() }
-    }
+    val starships = starshipList.filter { text.toString().lowercase() in it.name.lowercase() }
 
     Column {
         SearchField(searchText)

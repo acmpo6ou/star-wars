@@ -41,13 +41,11 @@ fun FilmListScreen(
 ) {
     val text by searchText.observeAsState()
     val isLoading by loading.observeAsState()
-    val films = remember(text) {
-        filmList.filter { text.toString().lowercase() in it.title.lowercase() }
-    }
+    val films = filmList.filter { text.toString().lowercase() in it.title.lowercase() }
 
     Column {
         SearchField(searchText)
-        if (films.isEmpty() && isLoading == false) {
+        if (films.isEmpty() && !text.isNullOrEmpty()) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,

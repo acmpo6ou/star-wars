@@ -38,9 +38,7 @@ fun PeopleListScreen(
 ) {
     val text by searchText.observeAsState()
     val isLoading by loading.observeAsState()
-    val people = remember(text) {
-        peopleList.filter { text.toString().lowercase() in it.name.lowercase() }
-    }
+    val people = peopleList.filter { text.toString().lowercase() in it.name.lowercase() }
 
     Column {
         SearchField(searchText)
