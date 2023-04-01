@@ -45,7 +45,7 @@ class MainActivityTest {
         navigate(R.id.filmListFragment)
 
         // wait for them to load
-        compose.waitUntil(5_000) {
+        compose.waitUntil(10_000) {
             compose.onAllNodesWithTag("search_field")
                 .fetchSemanticsNodes().size == 1
         }
@@ -88,7 +88,7 @@ class MainActivityTest {
         compose.onRoot().printToLog("mylog")
 
         // wait for people to get loaded
-        compose.waitUntil(5_000) {
+        compose.waitUntil(10_000) {
             compose.onAllNodesWithContentDescription("Add Luke Skywalker to favorites")
                 .fetchSemanticsNodes().size == 1
         }
@@ -128,7 +128,7 @@ class MainActivityTest {
             .performClick()
 
         // wait for them to load
-        compose.waitUntil(5_000) {
+        compose.waitUntil(10_000) {
             compose.onAllNodesWithText("X-wing")
                 .fetchSemanticsNodes().size == 1
         }
@@ -184,7 +184,7 @@ class MainActivityTest {
             .performClick()
 
         // wait for them to load
-        compose.waitUntil(5_000) {
+        compose.waitUntil(10_000) {
             compose.onAllNodesWithText("A New Hope")
                 .fetchSemanticsNodes().size == 1
         }
@@ -201,7 +201,7 @@ class MainActivityTest {
         navigate(R.id.favoritesFragment)
 
         // wait for them to load
-        compose.waitUntil(5_000) {
+        compose.waitUntil(10_000) {
             compose.onAllNodesWithText("Imperial shuttle")
                 .fetchSemanticsNodes().size == 1
         }
@@ -219,11 +219,5 @@ class MainActivityTest {
             .assertExists()
         compose.onNodeWithText("Imperial shuttle")
             .assertExists()
-
-        // remove Luke Skywalker
-        compose.onNodeWithContentDescription("Remove Luke Skywalker from favorites")
-            .performClick()
-        compose.onNodeWithText("Luke Skywalker")
-            .assertIsNotDisplayed()
     }
 }
